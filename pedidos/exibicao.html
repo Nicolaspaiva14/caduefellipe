@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exibição de Sugestões</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .logo-container img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 1px 1px 6px #000;
+    }
+
+    ul {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 3px solid #facc15;
+      border-radius: 16px;
+      padding: 20px 25px;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: #111;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .musica {
+      font-weight: bold;
+    }
+
+    .artista {
+      font-style: italic;
+      color: #444;
+    }
+
+    .remover-btn {
+      background-color: #e63946;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .remover-btn:hover {
+      background-color: #b71c1c;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="./img/WhatsApp Image 2025-03-24 at 20.16.45 (2).jpeg" alt="Logotipo">
+    <h1>🎶 Sugestões Recebidas</h1>
+  </div>
+
+  <ul id="listaSugestoes"></ul>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getDatabase, ref, onChildAdded, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCI86-aZXQsXQGfVFD8T-pDyrZTgJz3dP8",
+      authDomain: "sugestaocef.firebaseapp.com",
+      databaseURL: "https://sugestaocef-default-rtdb.firebaseio.com",
+      projectId: "sugestaocef",
+      storageBucket: "sugestaocef.appspot.com",
+      messagingSenderId: "916140229680",
+      appId: "1:916140229680:web:a25790639c72a76cde99f5",
+      measurementId: "G-9DSSV3B310"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const lista = document.getElementById('listaSugestoes');
+    const sugestoesRef = ref(db, 'sugestoes');
+
+    const musicasJaExibidas = new Set(); // Evitar músicas repetidas
+
+    onChildAdded(sugestoesRef, (snapshot) => {
+      const data = snapshot.val();
+      const key = snapshot.key;
+      const musica = data.musica?.trim();
+      const artista = data.artista?.trim();
+
+      const identificadorUnico = `${musica?.toLowerCase()} - ${artista?.toLowerCase()}`;
+
+      if (musicasJaExibidas.has(identificadorUnico)) {
+        return; // Já foi exibida, então ignora
+      }
+
+      musicasJaExibidas.add(identificadorUnico);
+
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div>
+          <span class="musica">${musica}</span> — <span class="artista">${artista}</span>
+        </div>
+        <button class="remover-btn">✔️ Cantada</button>
+      `;
+
+      li.querySelector('.remover-btn').addEventListener('click', () => {
+        if (confirm(`Tem certeza que deseja remover "${musica}" de ${artista}?`)) {
+          const musicaRef = ref(db, `sugestoes/${key}`);
+          remove(musicaRef);
+          li.remove();
+        }
+      });
+
+      lista.appendChild(li);
+    });
+  </script>
+</body>
+</html>

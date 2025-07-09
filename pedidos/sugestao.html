@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sugestão de Música</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #1a1a1a;
+      background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #fff;
+      text-align: center;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    #buscaContainer {
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background-color: #2c2c2c;
+      color: white;
+    }
+
+    input[type="text"]:focus {
+      border-color: #facc15;
+      outline: none;
+    }
+
+    .resultado {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .resultado:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .titulo-musica {
+      font-weight: 600;
+      color: #facc15;
+    }
+
+    .artista {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <img src="./img/WhatsApp Image 2025-03-24 at 20.16.45 (2).jpeg" alt="Logo da dupla" class="logo" />
+
+  <h1>Sugira uma música</h1>
+
+  <!-- ÍCONE DO INSTAGRAM ABAIXO DO TÍTULO -->
+  <div style="margin: 10px 0;">
+    <a href="https://www.instagram.com/caduefellipe/" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 28px; height: 28px; filter: invert(1);">
+    </a>
+  </div>
+
+  <div id="buscaContainer">
+    <input type="text" id="busca" placeholder="Digite uma música..." />
+    <div id="resultados"></div>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getDatabase, push, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+  // NOVA CONFIGURAÇÃO DO SEU NOVO PROJETO:
+  const firebaseConfig = {
+    apiKey: "AIzaSyCI86-aZXQsXQGfVFD8T-pDyrZTgJz3dP8",
+    authDomain: "sugestaocef.firebaseapp.com",
+    databaseURL: "https://sugestaocef-default-rtdb.firebaseio.com",
+    projectId: "sugestaocef",
+    storageBucket: "sugestaocef.appspot.com",
+    messagingSenderId: "916140229680",
+    appId: "1:916140229680:web:a25790639c72a76cde99f5",
+    measurementId: "G-9DSSV3B310"
+  };
+
+  // INICIALIZAÇÃO DO FIREBASE E BANCO:
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // 👇 AQUI continua o seu código normalmente:
+  const buscaInput = document.getElementById('busca');
+  const resultadosDiv = document.getElementById('resultados');
+
+  let timeout;
+  buscaInput.addEventListener('input', () => {
+    clearTimeout(timeout);
+    const termo = buscaInput.value.trim();
+    if (termo.length < 2) {
+      resultadosDiv.innerHTML = '';
+      return;
+    }
+
+    timeout = setTimeout(() => {
+      fetch(`https://api.deezer.com/search?q=${encodeURIComponent(termo)}&output=jsonp`, {
+        method: 'GET',
+        mode: 'no-cors'
+      }).then(() => {
+        const script = document.createElement('script');
+        script.src = `https://api.deezer.com/search?q=${encodeURIComponent(termo)}&output=jsonp&callback=mostrarResultados`;
+        document.body.appendChild(script);
+      });
+    }, 500);
+  });
+
+  window.mostrarResultados = (data) => {
+    resultadosDiv.innerHTML = '';
+    data.data.forEach(musica => {
+      const div = document.createElement('div');
+      div.classList.add('resultado');
+      div.innerHTML = `
+        <div class="titulo-musica">${musica.title}</div>
+        <div class="artista">${musica.artist.name}</div>
+      `;
+
+      div.onclick = async () => {
+        const sugestoesRef = ref(db, "sugestoes");
+        try {
+          const snapshot = await get(sugestoesRef);
+          let jaExiste = false;
+
+          if (snapshot.exists()) {
+            const sugestoes = snapshot.val();
+            for (const key in sugestoes) {
+              const data = sugestoes[key];
+              if (
+                data.musica.toLowerCase() === musica.title.toLowerCase() &&
+                data.artista.toLowerCase() === musica.artist.name.toLowerCase()
+              ) {
+                jaExiste = true;
+                break;
+              }
+            }
+          }
+
+          if (jaExiste) {
+            alert("Essa música já foi sugerida!");
+          } else {
+            push(sugestoesRef, {
+              musica: musica.title,
+              artista: musica.artist.name,
+              link: musica.link
+            }).then(() => {
+              alert("Música sugerida com sucesso!");
+              buscaInput.value = '';
+              resultadosDiv.innerHTML = '';
+            }).catch((err) => {
+              alert("Erro ao sugerir música");
+              console.error(err);
+            });
+          }
+        } catch (error) {
+          console.error("Erro ao verificar sugestões existentes:", error);
+        }
+      };
+
+      resultadosDiv.appendChild(div);
+    });
+  };
+</script>
+
+  </script>
+</body>
+</html>

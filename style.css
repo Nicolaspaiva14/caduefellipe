@@ -2,6 +2,237 @@
    STYLE.CSS — exclusivo da página inicial (index.html)
    ============================================================ */
 
+/* ========== SPLASH / TELA DE ENTRADA ========== */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.9s ease, visibility 0.9s ease;
+}
+
+.splash.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Fundo gradiente animado */
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,180,0,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 0%,   rgba(120,60,0,0.25) 0%, transparent 70%),
+    linear-gradient(160deg, #0a0600 0%, #1a0c00 40%, #0d0500 100%);
+  animation: splashBgPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes splashBgPulse {
+  from { filter: brightness(1); }
+  to   { filter: brightness(1.18); }
+}
+
+/* Partículas douradas flutuantes */
+.splash-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  animation: particleFloat 5s ease-in-out infinite;
+}
+.splash-particles span:nth-child(1) { left: 10%;  top: 80%; animation-delay: 0s;    animation-duration: 6s; }
+.splash-particles span:nth-child(2) { left: 25%;  top: 70%; animation-delay: 0.8s;  animation-duration: 7s; }
+.splash-particles span:nth-child(3) { left: 50%;  top: 90%; animation-delay: 1.5s;  animation-duration: 5s; }
+.splash-particles span:nth-child(4) { left: 70%;  top: 75%; animation-delay: 0.3s;  animation-duration: 8s; }
+.splash-particles span:nth-child(5) { left: 85%;  top: 85%; animation-delay: 2s;    animation-duration: 6s; }
+.splash-particles span:nth-child(6) { left: 40%;  top: 60%; animation-delay: 1.2s;  animation-duration: 7s; }
+.splash-particles span:nth-child(7) { left: 15%;  top: 50%; animation-delay: 0.5s;  animation-duration: 9s; }
+.splash-particles span:nth-child(8) { left: 60%;  top: 65%; animation-delay: 1.8s;  animation-duration: 5s; }
+
+@keyframes particleFloat {
+  0%   { opacity: 0;    transform: translateY(0)   scale(1); }
+  20%  { opacity: 0.9; }
+  80%  { opacity: 0.6; }
+  100% { opacity: 0;    transform: translateY(-120px) scale(1.5); }
+}
+
+/* Conteúdo central */
+.splash-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 24px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.splash-logo {
+  width: clamp(80px, 18vw, 130px);
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 24px rgba(255,200,0,0.45));
+  animation: splashLogoGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes splashLogoGlow {
+  from { filter: drop-shadow(0 0 16px rgba(255,200,0,0.3)); }
+  to   { filter: drop-shadow(0 0 36px rgba(255,200,0,0.7)); }
+}
+
+.splash-pre {
+  font-family: var(--font-body);
+  font-size: clamp(11px, 1.8vw, 14px);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(255,200,0,0.7);
+  margin-bottom: 8px;
+  animation: fadeUp 1s ease 0.2s both;
+}
+
+.splash-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 9vw, 76px);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(255,200,0,0.25), 0 4px 20px rgba(0,0,0,0.8);
+  animation: fadeUp 1s ease 0.4s both;
+}
+
+.splash-title span {
+  color: var(--gold);
+}
+
+.splash-sub {
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.6vw, 16px);
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  animation: fadeUp 1s ease 0.6s both;
+}
+
+.splash-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 24px auto;
+  animation: fadeUp 1s ease 0.7s both;
+}
+
+.splash-hint {
+  font-family: var(--font-body);
+  font-size: clamp(11px, 1.5vw, 13px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 32px;
+  animation: fadeUp 1s ease 0.8s both;
+}
+
+/* Botão ENTRAR */
+.splash-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: clamp(13px, 2vw, 16px);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+  animation: fadeUp 1s ease 1s both;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.splash-btn:hover,
+.splash-btn:focus-visible {
+  background: var(--gold);
+  color: #000;
+  box-shadow: 0 0 40px rgba(255,200,0,0.5), 0 0 80px rgba(255,200,0,0.2);
+}
+
+.splash-btn:active {
+  transform: scale(0.96);
+}
+
+.splash-btn-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.splash-btn:hover .splash-btn-icon {
+  transform: translateX(4px);
+}
+
+/* Ripple effect */
+.splash-btn-ripple {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,200,0,0.3) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  border-radius: inherit;
+}
+
+.splash-btn:active .splash-btn-ripple {
+  opacity: 1;
+  transform: scale(2.5);
+  transition: none;
+}
+
+/* Pulso do botão */
+.splash-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1px solid rgba(255,200,0,0.3);
+  border-radius: 4px;
+  animation: btnPulse 2.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes btnPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0;   transform: scale(1.12); }
+}
+
+.splash-credit {
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  animation: fadeUp 1s ease 1.2s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
 /* ---------- VÍDEO DE FUNDO ---------- */
 .video-wrap {
   position: fixed;

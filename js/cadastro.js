@@ -20,9 +20,21 @@ cadastroForm.addEventListener('submit', async (e) => {
   errorMsg.style.color = '#ff4d4d'; // reset para vermelho de erro
 
   // Restrição de e-mail e senha
-  const allowedEmails = ['nic08pm@gmail.com', 'dulaineju@gmail.com'];
+  const allowedEmails = ['dulaineju@gmail.com'];
   if (!allowedEmails.includes(email)) {
     errorMsg.textContent = 'Apenas e-mails autorizados podem se cadastrar.';
+    return;
+  }
+
+  // Validação de confirmação de senha
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  if (password !== confirmPassword) {
+    errorMsg.textContent = 'As senhas não coincidem. Verifique e tente novamente.';
+    return;
+  }
+
+  if (password.length < 6) {
+    errorMsg.textContent = 'A senha deve ter pelo menos 6 caracteres.';
     return;
   }
 
@@ -72,5 +84,26 @@ if (btnTogglePassword && passwordInput) {
     }
 
     btnTogglePassword.setAttribute('title', isPassword ? 'Ocultar senha' : 'Mostrar senha');
+  });
+}
+
+// Alternar visibilidade do confirmar senha
+const btnToggleConfirm = document.getElementById('btnToggleConfirm');
+const confirmInput = document.getElementById('confirmPassword');
+
+if (btnToggleConfirm && confirmInput) {
+  const eyeOpen2 = btnToggleConfirm.querySelector('.eye-open');
+  const eyeClosed2 = btnToggleConfirm.querySelector('.eye-closed');
+
+  btnToggleConfirm.addEventListener('click', () => {
+    const isPassword = confirmInput.getAttribute('type') === 'password';
+    confirmInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+    if (eyeOpen2 && eyeClosed2) {
+      eyeOpen2.style.display = isPassword ? 'none' : 'block';
+      eyeClosed2.style.display = isPassword ? 'block' : 'none';
+    }
+
+    btnToggleConfirm.setAttribute('title', isPassword ? 'Ocultar senha' : 'Mostrar senha');
   });
 }

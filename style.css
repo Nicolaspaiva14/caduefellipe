@@ -15,13 +15,20 @@
   height: 100%;
   object-fit: cover;
   object-position: 50% 25%;
+  pointer-events: none;
+}
+
+.video-wrap video::-webkit-media-controls,
+.video-wrap video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 .video-fallback {
   position: fixed;
   inset: 0;
   z-index: -3;
-  background: #111 center/cover no-repeat;
+  background: #111 url('img/cadu e fellipe.png') center/cover no-repeat;
 }
 
 .overlay {

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="O que a galera diz sobre os shows de Cadu & Fellipe. Opiniões, comentários e energia dos fãs." />
+  <title>Opiniões da Galera — Cadu & Fellipe</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="img/logo preta.png" />
+
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="depoimentos.css" />
+</head>
+
+<body>
+
+  <img src="img/cadu e fellipe.png" alt="" class="bg-image" aria-hidden="true" />
+  <div class="page-overlay" aria-hidden="true"></div>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html" aria-label="Cadu & Fellipe — Início">
+        <img src="img/logo.png" alt="Cadu & Fellipe" class="logo" />
+      </a>
+
+      <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agenda.html">Agenda</a></li>
+          <li><a href="pacotes.html">Pacotes</a></li>
+          <li><a href="fotos.html">Fotos</a></li>
+          <li><a href="opinioes.html" class="ativo">Opiniões</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======= CONTEÚDO PRINCIPAL ======= -->
+  <main class="depoimentos-container" id="main-content">
+    <h1 class="section-title">Opiniões da Galera</h1>
+    <hr class="section-line" />
+
+    <div class="depoimentos-intro">
+      <p>
+        A energia do nosso show é feita por vocês! Veja o que o público, contratantes e fãs dizem sobre a experiência com Cadu &amp; Fellipe.
+      </p>
+    </div>
+
+    <!-- BANNER DE DESTAQUE / IMPACTO -->
+    <div class="stats-banner">
+      <div class="stat-item">
+        <span class="stat-num">+100</span>
+        <span class="stat-label">Shows Inesquecíveis</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5.0 ★</span>
+        <span class="stat-label">Avaliação do Público</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Energia &amp; Sertanejo Raiz</span>
+      </div>
+    </div>
+
+    <!-- GRID DE COMENTÁRIOS DA GALERA -->
+    <section class="comentarios-grid" id="comentarios-grid" aria-label="Depoimentos do público">
+      <!-- Injetado dinamicamente via JavaScript sincronizado com o painel Admin -->
+    </section>
+
+    <!-- FORMULÁRIO PARA O PÚBLICO MANDAR SEU COMENTÁRIO -->
+    <section class="avaliar-secao" aria-labelledby="titulo-avaliar">
+      <h2 id="titulo-avaliar">Esteve no Show? Deixe sua Opinião!</h2>
+      <p>
+        Conte para a dupla e para toda a galera como foi a sua experiência, a energia da noite e a sua música favorita.
+      </p>
+
+      <form class="avaliar-form" id="form-comentario">
+        <div class="avaliar-form-row">
+          <input
+            type="text"
+            id="depoimento-nome"
+            class="avaliar-input"
+            placeholder="Seu Nome completo"
+            required
+          />
+          <input
+            type="text"
+            id="depoimento-cidade"
+            class="avaliar-input"
+            placeholder="Sua Cidade - UF (ex: Campinas - SP)"
+            required
+          />
+        </div>
+
+        <div class="estrelas-rating">
+          <span>Sua Nota:</span>
+          <div class="estrelas-opcoes">
+            <input type="radio" name="estrelas" id="star5" value="5" checked />
+            <label for="star5" title="5 estrelas">★</label>
+            <input type="radio" name="estrelas" id="star4" value="4" />
+            <label for="star4" title="4 estrelas">★</label>
+            <input type="radio" name="estrelas" id="star3" value="3" />
+            <label for="star3" title="3 estrelas">★</label>
+            <input type="radio" name="estrelas" id="star2" value="2" />
+            <label for="star2" title="2 estrelas">★</label>
+            <input type="radio" name="estrelas" id="star1" value="1" />
+            <label for="star1" title="1 estrela">★</label>
+          </div>
+        </div>
+
+        <textarea
+          id="depoimento-texto"
+          class="avaliar-textarea"
+          placeholder="Escreva como foi o show, o que mais gostou e mande um recado para Cadu & Fellipe…"
+          required
+        ></textarea>
+
+        <button type="submit" class="btn-enviar-avaliacao" id="btn-enviar-depoimento">
+          <span class="btn-text">Publicar Comentário</span>
+        </button>
+
+        <div class="feedback-msg" id="comentario-feedback"></div>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ======= RODAPÉ ======= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <p>© 2026 Cadu & Fellipe • Todos os direitos reservados</p>
+      <a href="admin.html" class="footer-lock-link" aria-label="Acesso Administrativo" title="Painel Administrativo">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <!-- SCROLL TO TOP -->
+  <a href="#" class="scroll-to-top" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+  </a>
+
+  <!-- REDES SOCIAIS -->
+  <div class="social-follow" aria-label="Redes sociais">
+    <span class="follow-label">Siga-nos:</span>
+    <a href="https://www.instagram.com/caduefellipe" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <img src="img/instagramColorido.png" class="follow-icon" alt="Instagram" />
+    </a>
+    <a href="https://wa.me/5519996265757" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <img src="img/zapColorido.png" class="follow-icon" alt="WhatsApp" />
+    </a>
+  </div>
+
+  <script src="nav.js"></script>
+  <script>
+    const formComentario = document.getElementById('form-comentario');
+    const feedbackMsg    = document.getElementById('comentario-feedback');
+    const gridEl         = document.getElementById('comentarios-grid');
+
+    const STORAGE_KEY = 'caduefellipe_comentarios_lista';
+
+    const COMENTARIOS_PADRAO = [
+      {
+        id: 'padrao_1',
+        nome: 'Mariana Andrade',
+        cidade: 'Hortolândia - SP',
+        estrelas: '5',
+        texto: 'Que show incrível! A energia dos meninos no palco é contagiante do início ao fim. Tocaram os clássicos do sertanejo e as músicas autorais que todo mundo cantou junto. Já estamos esperando o próximo aqui na região!'
+      },
+      {
+        id: 'padrao_2',
+        nome: 'Rodrigo Costa',
+        cidade: 'Campinas - SP',
+        estrelas: '5',
+        texto: 'Contratamos o show para a nossa festa de aniversário e foi um sucesso total. Além de serem músicos de altíssimo nível, são super atenciosos com os convidados. Todos elogiaram muito!'
+      },
+      {
+        id: 'padrao_3',
+        nome: 'Felipe Bueno',
+        cidade: 'Paulínia - SP',
+        estrelas: '5',
+        texto: 'Voz marcante, violão afiado e uma presença de palco sem igual. A dupla entrega emoção e animação sem deixar a pista parar por um minuto. Parabéns Cadu e Fellipe!'
+      },
+      {
+        id: 'padrao_4',
+        nome: 'Beatriz Lima',
+        cidade: 'Santos - SP',
+        estrelas: '5',
+        texto: 'Assisti ao show no MSC Preziosa e fiquei encantada! Sertanejo com muita classe e carisma. Eles conquistaram todo mundo a bordo. Virei fã na hora!'
+      },
+      {
+        id: 'padrao_5',
+        nome: 'Lucas Mendes',
+        cidade: 'Americana - SP',
+        estrelas: '5',
+        texto: 'Profissionalismo impecável de toda a equipe e uma performance que emociona de verdade. A transição das modas apaixonadas para o sertanejo universitário animado é perfeita.'
+      },
+      {
+        id: 'padrao_6',
+        nome: 'Juliana Nogueira',
+        cidade: 'Sumaré - SP',
+        estrelas: '5',
+        texto: 'Foi o melhor show do ano na nossa cidade! Carisma puro, humildade e muita qualidade musical. Podem vir todo mês que a gente vai em todos!'
+      }
+    ];
+
+    function getComentarios() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(COMENTARIOS_PADRAO));
+          return COMENTARIOS_PADRAO;
+        }
+        return JSON.parse(raw);
+      } catch (e) {
+        return COMENTARIOS_PADRAO;
+      }
+    }
+
+    function salvarComentarios(lista) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+    }
+
+    function getIniciais(nome) {
+      const partes = nome.trim().split(' ');
+      if (partes.length === 1) return partes[0].substring(0, 2).toUpperCase();
+      return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
+    }
+
+    function renderizarComentarios() {
+      const lista = getComentarios();
+      gridEl.innerHTML = '';
+
+      if (lista.length === 0) {
+        gridEl.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6); grid-column: 1 / -1; padding: 40px;">Nenhum comentário publicado ainda. Seja o primeiro a deixar sua opinião abaixo!</p>';
+        return;
+      }
+
+      lista.forEach((dados, index) => {
+        const card = document.createElement('article');
+        card.className = index === 0 ? 'comentario-card destaque' : 'comentario-card';
+        const estrelasTxt = '★'.repeat(Number(dados.estrelas) || 5);
+        const iniciais = getIniciais(dados.nome);
+
+        card.innerHTML = `
+          <div class="comentario-estrelas">${estrelasTxt}</div>
+          <p class="comentario-texto">"${dados.texto}"</p>
+          <div class="comentario-autor-wrap">
+            <div class="autor-avatar">${iniciais}</div>
+            <div class="autor-info">
+              <span class="autor-nome">${dados.nome}</span>
+              <span class="autor-local">${dados.cidade}</span>
+            </div>
+          </div>
+        `;
+        gridEl.appendChild(card);
+      });
+    }
+
+    if (formComentario) {
+      formComentario.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const nome = document.getElementById('depoimento-nome').value.trim();
+        const cidade = document.getElementById('depoimento-cidade').value.trim();
+        const texto = document.getElementById('depoimento-texto').value.trim();
+        const estrelaChecked = document.querySelector('input[name="estrelas"]:checked');
+        const estrelas = estrelaChecked ? estrelaChecked.value : '5';
+
+        if (!nome || !cidade || !texto) return;
+
+        const novoComentario = {
+          id: 'comentario_' + Date.now(),
+          nome,
+          cidade,
+          texto,
+          estrelas,
+          data: new Date().toISOString()
+        };
+
+        const lista = getComentarios();
+        lista.unshift(novoComentario);
+        salvarComentarios(lista);
+
+        renderizarComentarios();
+
+        feedbackMsg.textContent = '✓ Muito obrigado! Seu comentário foi publicado com sucesso.';
+        feedbackMsg.className = 'feedback-msg sucesso';
+
+        formComentario.reset();
+
+        setTimeout(() => {
+          feedbackMsg.className = 'feedback-msg';
+          feedbackMsg.style.display = 'none';
+        }, 5000);
+      });
+    }
+
+    renderizarComentarios();
+  </script>
+  <script src="js/counter.js"></script>
+</body>
+</html>

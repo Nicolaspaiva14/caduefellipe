@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Galeria de fotos da dupla sertaneja Cadu & Fellipe." />
+  <title>Fotos — Cadu & Fellipe</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="img/logo preta.png" />
+
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="fotos.css" />
+</head>
+
+<body>
+
+  <img src="img/cadu e fellipe.png" alt="" class="bg-image" aria-hidden="true" />
+  <div class="page-overlay" aria-hidden="true"></div>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html" aria-label="Cadu & Fellipe — Início">
+        <img src="img/logo.png" alt="Cadu & Fellipe" class="logo" />
+      </a>
+
+      <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agenda.html">Agenda</a></li>
+          <li><a href="pacotes.html">Pacotes</a></li>
+          <li><a href="fotos.html" class="ativo">Fotos</a></li>
+          <li><a href="opinioes.html">Opiniões</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======= CONTEÚDO ======= -->
+  <main class="fotos-container" id="main-content">
+    <h1 class="section-title">Fotos</h1>
+    <hr class="section-line" />
+
+    <!-- Galeria -->
+    <section class="galeria" id="galeria-fotos" aria-label="Galeria de fotos">
+
+      <!-- Foto destaque padrão (fallback) -->
+      <figure class="foto-card foto-destaque">
+        <img
+          src="img/cadu e fellipe.png"
+          alt="Cadu & Fellipe — foto oficial da dupla"
+          loading="lazy"
+        />
+        <figcaption class="foto-caption">Cadu & Fellipe</figcaption>
+      </figure>
+
+      <!-- Foto 2 padrão (fallback) -->
+      <figure class="foto-card">
+        <img
+          src="img/logo2.jpeg"
+          alt="Cadu & Fellipe — divulgação"
+          loading="lazy"
+        />
+        <figcaption class="foto-caption">Divulgação</figcaption>
+      </figure>
+
+      <!-- Foto 3 padrão (fallback) -->
+      <figure class="foto-card">
+        <img
+          src="img/logo.png"
+          alt="Logo Cadu & Fellipe"
+          loading="lazy"
+          class="foto-logo-bg"
+        />
+        <figcaption class="foto-caption">Logo Oficial</figcaption>
+      </figure>
+
+    </section>
+
+    <!-- Placeholder para futuras fotos -->
+    <p class="fotos-nota" id="fotos-nota">
+      Mais fotos em breve! Siga-nos no Instagram para acompanhar os bastidores.
+    </p>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar foto" hidden>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Fechar">✕</button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Foto anterior">‹</button>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Próxima foto">›</button>
+    <figure class="lightbox-figure">
+      <img src="" alt="" id="lightbox-img" />
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+  </div>
+
+  <!-- ======= RODAPÉ ======= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <p>© 2026 Cadu & Fellipe • Todos os direitos reservados</p>
+      <a href="admin.html" class="footer-lock-link" aria-label="Acesso Administrativo" title="Painel Administrativo">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <!-- SCROLL TO TOP -->
+  <a href="#" class="scroll-to-top" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+  </a>
+
+  <!-- REDES SOCIAIS -->
+  <div class="social-follow" aria-label="Redes sociais">
+    <span class="follow-label">Siga-nos:</span>
+    <a href="https://www.instagram.com/caduefellipe" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <img src="img/instagramColorido.png" class="follow-icon" alt="Instagram" />
+    </a>
+    <a href="https://wa.me/5519996265757" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <img src="img/zapColorido.png" class="follow-icon" alt="WhatsApp" />
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="nav.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://irunkppevljtisgmkoez.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydW5rcHBldmxqdGlzZ21rb2V6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNTg1MTcsImV4cCI6MjA5MzczNDUxN30.kNvWjOe2jifWoGJw8FwRJumSapD9wI3Wt5ZflTTy49k';
+
+    const galeriaEl = document.getElementById('galeria-fotos');
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lightbox-img');
+    const lbCaption = document.getElementById('lightbox-caption');
+    const lbClose   = document.getElementById('lightbox-close');
+    const lbPrev    = document.getElementById('lightbox-prev');
+    const lbNext    = document.getElementById('lightbox-next');
+
+    let current = 0;
+    let images = [];
+
+    function vincularLightbox() {
+      images = [];
+      const cards = galeriaEl.querySelectorAll('.foto-card');
+
+      cards.forEach((card, i) => {
+        const img = card.querySelector('img');
+        const cap = card.querySelector('figcaption');
+        images.push({ 
+          src: img.src, 
+          alt: img.alt || cap?.textContent || 'Foto Cadu & Fellipe', 
+          caption: cap ? cap.textContent : '' 
+        });
+
+        // Remove listener antigo substituindo o nó ou limpando
+        card.onclick = () => openLightbox(i);
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.onkeydown = (e) => { 
+          if (e.key === 'Enter' || e.key === ' ') { 
+            e.preventDefault(); 
+            openLightbox(i); 
+          } 
+        };
+      });
+    }
+
+    function openLightbox(idx) {
+      if (!images || images.length === 0) return;
+      current = idx;
+      showImage();
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    function showImage() {
+      const { src, alt, caption } = images[current];
+      lbImg.src = src;
+      lbImg.alt = alt;
+      lbCaption.textContent = caption;
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', () => { 
+      current = (current - 1 + images.length) % images.length; 
+      showImage(); 
+    });
+    lbNext.addEventListener('click', () => { 
+      current = (current + 1) % images.length; 
+      showImage(); 
+    });
+
+    lightbox.addEventListener('click', e => { 
+      if (e.target === lightbox) closeLightbox(); 
+    });
+
+    document.addEventListener('keydown', e => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'ArrowLeft')  { current = (current - 1 + images.length) % images.length; showImage(); }
+      if (e.key === 'ArrowRight') { current = (current + 1) % images.length; showImage(); }
+    });
+
+    // Inicia com as fotos estáticas atuais como base
+    vincularLightbox();
+
+    // Carregar fotos do Supabase
+    async function carregarFotosSupabase() {
+      if (!window.supabase) return;
+
+      try {
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const { data, error } = await client
+          .from('fotos')
+          .select('*')
+          .order('criado_em', { ascending: false });
+
+        if (error) {
+          console.warn('Erro ao buscar fotos do Supabase:', error.message);
+          return;
+        }
+
+        if (data && data.length > 0) {
+          // Limpa galeria e renderiza fotos do banco
+          galeriaEl.innerHTML = '';
+
+          data.forEach((foto, index) => {
+            const fig = document.createElement('figure');
+            // Primeira foto pode ter destaque
+            fig.className = index === 0 ? 'foto-card foto-destaque' : 'foto-card';
+
+            fig.innerHTML = `
+              <img
+                src="${foto.url}"
+                alt="${foto.descricao}"
+                loading="lazy"
+              />
+              <figcaption class="foto-caption">${foto.descricao}</figcaption>
+            `;
+
+            galeriaEl.appendChild(fig);
+          });
+
+          // Atualiza lightbox com as novas fotos
+          vincularLightbox();
+        }
+      } catch (e) {
+        console.warn('Falha na conexão de fotos:', e);
+      }
+    }
+
+    carregarFotosSupabase();
+  </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Painel Administrativo — Cadu & Fellipe</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/png" href="img/logo preta.png" />
+
+<link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topo">
+    <a href="index.html" style="display: inline-block;">
+      <img src="img/logo.png" class="logo">
+    </a>
+
+    <h1>Painel Administrativo</h1>
+
+    <p class="sub">
+      Cadastre e gerencie os próximos eventos da dupla
+    </p>
+
+    <button id="logoutBtn" style="margin-top: 15px; background: transparent; border: 1px solid var(--gold); color: var(--gold); width: auto; padding: 0 20px; height: 40px;">Sair / Logout</button>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>Adicionar Novo Show</h2>
+
+      <form id="showForm">
+
+        <input type="date" id="data" required>
+
+        <input type="text" id="cidade" placeholder="Cidade" required>
+
+        <input type="text" id="local" placeholder="Local do evento" required>
+
+        <div class="horarios">
+
+          <input type="text" id="horario_inicio" placeholder="Início Ex: 22:00">
+
+          <input type="text" id="horario_fim" placeholder="Fim Ex: 01:00">
+
+        </div>
+
+        <button type="submit">
+          Cadastrar Show
+        </button>
+
+      </form>
+    </div>
+
+
+    <div class="card">
+      <h2>Agenda Atual</h2>
+
+      <div id="lista" class="lista">
+        <p class="loading">Carregando shows...</p>
+      </div>
+    </div>
+
+    <!-- SEÇÃO DA GALERIA DE FOTOS -->
+    <div class="card">
+      <h2>Adicionar Foto na Galeria</h2>
+
+      <form id="fotoForm">
+        <!-- Input de arquivo invisível ativado pelo dropzone -->
+        <input type="file" id="fotoArquivo" accept="image/*" style="display: none;">
+
+        <div class="upload-dropzone" id="fotoDropzone">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">Clique ou arraste uma foto aqui</div>
+          <div class="upload-hint">Formatos: JPG, PNG, WEBP (otimização automática)</div>
+        </div>
+
+        <div class="preview-container" id="fotoPreviewContainer">
+          <img id="fotoPreviewImg" src="" alt="Prévia da foto">
+          <button type="button" class="btn-remove-preview" id="btnRemovePreview" title="Remover imagem">✕</button>
+        </div>
+
+        <input type="text" id="fotoDescricao" placeholder="Descrição / Legenda da foto" required>
+
+        <button type="submit" id="btnSubmitFoto">
+          Publicar Foto na Galeria
+        </button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Fotos Publicadas</h2>
+
+      <div id="lista-fotos" class="fotos-admin-grid">
+        <p class="loading">Carregando fotos da galeria...</p>
+      </div>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Mensagens de Contato</h2>
+      <div id="lista-mensagens" class="lista">
+        <p class="loading">Carregando mensagens...</p>
+      </div>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+        <h2 style="margin-bottom: 0;">Gerenciar Comentários da Galera (Opiniões)</h2>
+        <button id="btnRestaurarPadrao" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); width: auto; padding: 0 16px; height: 38px; font-size: 13px; border-radius: 8px; cursor: pointer;">
+          Restaurar Comentários Iniciais
+        </button>
+      </div>
+      <div id="lista-comentarios-admin" class="lista">
+        <p class="loading">Carregando comentários...</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/admin.js?v=4"></script>
+
+</body>
+</html>

@@ -1,0 +1,596 @@
+/* ============================================================
+   SHARED.CSS — tokens, reset, header, nav, social, utils
+   Importado em todas as páginas
+   ============================================================ */
+
+/* ---------- RESET ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ---------- TOKENS ---------- */
+:root {
+  --gold:   #ffcc00;
+  --white:  #ffffff;
+  --black:  #000000;
+  --gray:   rgba(255,255,255,0.08);
+  --blur:   blur(6px);
+
+  --font-display: 'Cinzel', serif;
+  --font-title:   'Playfair Display', serif;
+  --font-body:    'Inter', sans-serif;
+
+  --header-h: 90px;
+}
+
+/* ---------- BODY BASE ---------- */
+body {
+  background: #000;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  color: var(--white);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   HEADER / NAVBAR
+   ============================================================ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-h);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.80) 0%,
+    rgba(0,0,0,0.40) 60%,
+    rgba(0,0,0,0) 100%
+  );
+
+  backdrop-filter: blur(3px);
+}
+
+/* wrapper */
+.header-inner {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* ---------- LOGO ---------- */
+.logo-link {
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.logo {
+  height: 160px;
+  width: auto;
+}
+
+/* ---------- HAMBURGER ---------- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  width: 38px;
+  height: 38px;
+
+  cursor: pointer;
+  margin-left: auto;
+
+  z-index: 1100;
+
+  background: transparent;
+  border: none;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+
+  transition:
+    transform .35s ease,
+    opacity .25s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- NAV DESKTOP ---------- */
+.main-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+
+  z-index: 9;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: clamp(16px, 2.2vw, 36px);
+}
+
+.main-nav a {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  color: var(--white);
+
+  position: relative;
+
+  opacity: 0;
+  transform: translateY(-10px);
+
+  animation: navFade .7s ease forwards;
+
+  transition: opacity .2s;
+}
+
+/* stagger */
+.main-nav li:nth-child(1) a { animation-delay: .06s; }
+.main-nav li:nth-child(2) a { animation-delay: .12s; }
+.main-nav li:nth-child(3) a { animation-delay: .18s; }
+.main-nav li:nth-child(4) a { animation-delay: .24s; }
+.main-nav li:nth-child(5) a { animation-delay: .30s; }
+.main-nav li:nth-child(6) a { animation-delay: .36s; }
+.main-nav li:nth-child(7) a { animation-delay: .42s; }
+
+.main-nav a:hover {
+  opacity: .65;
+}
+
+.main-nav a.ativo {
+  opacity: 1;
+}
+
+.main-nav a.ativo::after {
+  width: 60% !important;
+}
+
+.main-nav a::after {
+  content: '';
+
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+
+  width: 0;
+  height: 2px;
+
+  background: var(--white);
+
+  transform: translateX(-50%);
+  transition: width .3s ease;
+}
+
+.main-nav a:hover::after {
+  width: 60%;
+}
+
+@keyframes navFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   REDES SOCIAIS
+   ============================================================ */
+.social-follow {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+
+  z-index: 2000;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+
+  padding: 10px 16px;
+}
+
+/* Linha divisória (usada só na index) */
+.social-divider {
+  display: none;
+}
+
+/* Ícones em linha */
+.social-icons-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.follow-label {
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 500;
+
+  opacity: .75;
+  letter-spacing: .3px;
+
+  white-space: nowrap;
+}
+
+.follow-icon-wrap {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.follow-icon {
+  width: 32px;
+  height: 32px;
+
+  object-fit: contain;
+  display: block;
+
+  transition:
+    transform .2s ease,
+    filter .2s ease;
+}
+
+.social-follow a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+}
+
+.follow-icon:hover {
+  transform: scale(1.18);
+  filter: drop-shadow(0 0 6px rgba(255,255,255,.5));
+}
+
+/* ============================================================
+   SCROLL TO TOP
+   ============================================================ */
+.scroll-to-top {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+
+  width: 44px;
+  height: 44px;
+
+  background: rgba(255,255,255,0.15);
+
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 1100;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity .3s ease,
+    transform .3s ease;
+
+  backdrop-filter: blur(4px);
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-3px);
+}
+
+.scroll-to-top svg {
+  width: 18px;
+  height: 18px;
+
+  stroke: var(--white);
+  fill: none;
+
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ============================================================
+   BACKGROUND
+   ============================================================ */
+.bg-image {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center 15%;
+
+  filter: brightness(0.35) blur(5px);
+
+  z-index: -2;
+}
+
+.page-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.50);
+
+  z-index: -1;
+}
+
+/* ============================================================
+   SECTION TITLE
+   ============================================================ */
+.section-title {
+  font-family: var(--font-title);
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  margin-bottom: 12px;
+}
+
+.section-line {
+  width: 100px;
+  height: 4px;
+
+  background: var(--gold);
+
+  border: none;
+  margin-bottom: 36px;
+}
+
+/* ============================================================
+   RESPONSIVIDADE MOBILE
+   ============================================================ */
+@media (max-width: 900px) {
+
+  :root {
+    --header-h: 70px;
+  }
+
+  .site-header {
+    padding: 0 20px;
+  }
+
+  .logo {
+    height: 90px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  /* ---------- MENU MOBILE ---------- */
+  .main-nav {
+  position: fixed;
+
+  top: 70px;
+  left: 0;
+
+  width: 100%;
+  height: calc(100vh - 70px);
+
+  transform: translateY(100%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 40px;
+
+  background: rgba(0,0,0,0.96);
+  backdrop-filter: blur(12px);
+
+  z-index: 1050;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    transform .45s cubic-bezier(.22,1,.36,1),
+    opacity .35s ease;
+
+  overflow-y: auto;
+}
+
+ .main-nav.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+  .main-nav ul {
+    flex-direction: column;
+    align-items: center;
+
+    gap: 35px;
+
+    width: 100%;
+  }
+
+  .main-nav li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-nav a,
+  .main-nav a.ativo {
+    display: block;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    transform: none !important;
+    animation: none !important;
+
+    color: var(--white);
+  }
+
+  .main-nav a::after {
+    display: none;
+  }
+}
+
+/* ============================================================
+   MOBILE PEQUENO
+   ============================================================ */
+@media (max-width: 480px) {
+
+  .logo {
+    height: 75px;
+  }
+
+  .follow-label {
+    display: none;
+  }
+
+  .follow-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .social-follow a {
+    width: 28px;
+    height: 28px;
+  }
+
+  .social-follow {
+    right: 12px;
+    bottom: 16px;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+}
+
+/* ============================================================
+   RODAPÉ DISCRETO (SITE-FOOTER)
+   ============================================================ */
+.site-footer {
+  width: 100%;
+  padding: 36px 20px 48px;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  flex-wrap: wrap;
+}
+
+.footer-lock-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.28);
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-lock-link:hover {
+  color: var(--gold);
+  transform: scale(1.18);
+}

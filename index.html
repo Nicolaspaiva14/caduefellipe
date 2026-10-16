@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Site oficial da dupla sertaneja Cadu & Fellipe." />
+  <title>Cadu & Fellipe — Oficial</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="img/logo preta.png" />
+
+  <link rel="stylesheet" href="shared.css?v=3" />
+<link rel="stylesheet" href="style.css?v=3" />
+</head>
+
+<body>
+
+  <!-- VÍDEO DE FUNDO -->
+  <div class="video-wrap" aria-hidden="true">
+    <video id="bgVideo" autoplay muted playsinline></video>
+  </div>
+  <div class="video-fallback" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo-link" href="index.html" aria-label="Cadu & Fellipe — Início">
+        <img src="img/logo.png" alt="Cadu & Fellipe" class="logo" />
+      </a>
+
+      <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html" class="ativo">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agenda.html">Agenda</a></li>
+          <li><a href="pacotes.html">Pacotes</a></li>
+          <li><a href="fotos.html">Fotos</a></li>
+          <li><a href="opinioes.html">Opiniões</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======= HERO ======= -->
+  <main class="hero" id="inicio" role="main">
+    <h1 class="hero-title">Cadu & Fellipe</h1>
+<p class="hero-subtitle">
+  Emoção, sertanejo e experiências inesquecíveis
+</p>
+    <a href="agenda.html" class="btn-agenda" aria-label="Ver agenda de shows">
+      <span class="btn-text">VER AGENDA</span>
+      <span class="btn-arrow" aria-hidden="true">→</span>
+    </a>
+
+  </main>
+
+  <!-- ======= REDES SOCIAIS + COUNTDOWN (canto inferior direito) ======= -->
+  <div class="social-follow" aria-label="Redes sociais e próximo show">
+
+    <!-- Contagem regressiva -->
+    <div class="next-show-minimal" id="next-show-wrap" aria-live="polite">
+      <span class="next-show-text" id="next-show-label">O próximo show é em</span>
+      <span id="countdown-timer">--:--:--:--</span>
+      <span class="next-show-detail" id="next-show-detail"></span>
+    </div>
+
+    <!-- Divisor -->
+    <div class="social-divider"></div>
+
+    <!-- Ícones -->
+    <div class="social-icons-row">
+      <span class="follow-label">Siga-nos:</span>
+      <a href="https://www.instagram.com/caduefellipe" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Cadu e Fellipe">
+        <img src="img/instagramColorido.png" class="follow-icon" alt="Instagram" />
+      </a>
+      <a href="https://wa.me/5519996265757" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp de Cadu e Fellipe">
+        <img src="img/zapColorido.png" class="follow-icon" alt="WhatsApp" />
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="nav.js"></script>
+  <script src="script.js"></script>
+  <script src="countdown.js"></script>
+</body>
+</html>

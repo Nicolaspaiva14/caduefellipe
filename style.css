@@ -8,6 +8,7 @@
   inset: 0;
   z-index: -2;
   overflow: hidden;
+  background: #000;
 }
 
 .video-wrap video {
@@ -16,19 +17,22 @@
   object-fit: cover;
   object-position: 50% 25%;
   pointer-events: none;
+  background: #000;
 }
 
 .video-wrap video::-webkit-media-controls,
+.video-wrap video::-webkit-media-controls-enclosure,
+.video-wrap video::-webkit-media-controls-panel,
+.video-wrap video::-webkit-media-controls-play-button,
 .video-wrap video::-webkit-media-controls-start-playback-button {
   display: none !important;
-  -webkit-appearance: none;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 .video-fallback {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  background: #111 url('img/cadu e fellipe.png') center/cover no-repeat;
+  display: none;
 }
 
 .overlay {

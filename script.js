@@ -1,4 +1,4 @@
-// script.js — video playlist para a index (compatível com iOS Safari / Android)
+// script.js — playlist e alternância suave de vídeos da página inicial
 document.addEventListener('DOMContentLoaded', () => {
   const player = document.getElementById('bgVideo');
   if (!player) return;
@@ -6,54 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const playlist = ['videos/video1.mp4', 'videos/video2.mp4'];
   let idx = 0;
 
-  // Garante propriedades e atributos essenciais para o WebKit / iOS Safari
+  // Garante que o WebKit / iOS trate como vídeo mudo em linha
   player.muted = true;
   player.defaultMuted = true;
   player.playsInline = true;
-  player.setAttribute('playsinline', '');
-  player.setAttribute('webkit-playsinline', '');
 
-  function attemptPlay() {
-    player.muted = true;
-    player.defaultMuted = true;
-    const playPromise = player.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay bloqueado por políticas do sistema (ex: Modo Pouca Energia do iOS)
-        // Ativa o vídeo no primeiro toque ou rolagem do usuário
-        setupTouchFallback();
-      });
-    }
-  }
-
-  let touchFallbackActive = false;
-  function setupTouchFallback() {
-    if (touchFallbackActive) return;
-    touchFallbackActive = true;
-
-    const events = ['touchstart', 'touchend', 'click', 'scroll', 'pointerdown'];
-    const handleFirstInteraction = () => {
-      player.muted = true;
-      player.defaultMuted = true;
-      const promise = player.play();
-      if (promise !== undefined) {
-        promise.then(() => {
-          removeListeners();
-        }).catch(() => {});
-      }
-    };
-
-    function removeListeners() {
-      events.forEach(evt => window.removeEventListener(evt, handleFirstInteraction, { passive: true }));
-      touchFallbackActive = false;
-    }
-
-    events.forEach(evt => {
-      window.addEventListener(evt, handleFirstInteraction, { passive: true, once: false });
-    });
-
-    player.addEventListener('play', removeListeners, { once: true });
-  }
+  // Quando começar a tocar pela primeira vez, remove loop para permitir transição entre os vídeos
+  player.addEventListener('playing', () => {
+    player.removeAttribute('loop');
+  }, { once: true });
 
   function loadAndPlay(i) {
     try {
@@ -61,9 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
       player.defaultMuted = true;
       player.src = playlist[i];
       player.load();
-      attemptPlay();
+      const p = player.play();
+      if (p && p.catch) p.catch(() => {});
     } catch (err) {
-      console.warn('Erro ao carregar video:', err);
+      console.warn('Erro ao alternar vídeo:', err);
     }
   }
 
@@ -78,12 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.hidden) {
       try { player.pause(); } catch(e) {}
     } else {
-      if (player.paused) {
-        attemptPlay();
-      }
+      player.muted = true;
+      const p = player.play();
+      if (p && p.catch) p.catch(() => {});
     }
   });
-
-  // Tenta reproduzir imediatamente
-  attemptPlay();
 });

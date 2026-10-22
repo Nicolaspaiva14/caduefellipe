@@ -217,16 +217,22 @@
       }
     ];
 
+    const STORAGE_KEY_INICIADO = 'caduefellipe_comentarios_iniciado';
+
     function getComentarios() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
+        // Se nunca foi inicializado antes, carrega os comentários padrão pela primeira vez
+        const iniciado = localStorage.getItem(STORAGE_KEY_INICIADO);
+        if (!iniciado) {
+          localStorage.setItem(STORAGE_KEY_INICIADO, '1');
           localStorage.setItem(STORAGE_KEY, JSON.stringify(COMENTARIOS_PADRAO));
           return COMENTARIOS_PADRAO;
         }
-        return JSON.parse(raw);
+        // Já foi inicializado: retorna o que está salvo (pode ser lista vazia se tudo foi deletado)
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
       } catch (e) {
-        return COMENTARIOS_PADRAO;
+        return [];
       }
     }
 

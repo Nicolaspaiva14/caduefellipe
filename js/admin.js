@@ -625,14 +625,17 @@ const btnRestaurarPadrao = document.getElementById('btnRestaurarPadrao');
 
 function getComentariosAtuais() {
   try {
-    const raw = localStorage.getItem('caduefellipe_comentarios_lista');
-    if (!raw) {
+    const iniciado = localStorage.getItem('caduefellipe_comentarios_iniciado');
+    if (!iniciado) {
+      localStorage.setItem('caduefellipe_comentarios_iniciado', '1');
       localStorage.setItem('caduefellipe_comentarios_lista', JSON.stringify(COMENTARIOS_PADRAO));
       return COMENTARIOS_PADRAO;
     }
-    return JSON.parse(raw);
+    // Já inicializado: retorna o que está salvo (pode ser lista vazia se tudo foi deletado)
+    const raw = localStorage.getItem('caduefellipe_comentarios_lista');
+    return raw ? JSON.parse(raw) : [];
   } catch (e) {
-    return COMENTARIOS_PADRAO;
+    return [];
   }
 }
 

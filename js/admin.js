@@ -308,10 +308,8 @@ const listaFotos = document.getElementById('lista-fotos');
 
 let fotoSelecionada = null;
 
-// Clique no dropzone abre o seletor de arquivos
+// Eventos do seletor de foto (drag & drop e seleção de arquivo)
 if (fotoDropzone && fotoArquivo) {
-  fotoDropzone.addEventListener('click', () => fotoArquivo.click());
-
   // Arrastar e soltar (drag & drop)
   ['dragenter', 'dragover'].forEach(eventName => {
     fotoDropzone.addEventListener(eventName, (e) => {
@@ -371,8 +369,8 @@ function limparSelecaoFoto() {
   if (fotoDropzone) fotoDropzone.style.display = 'flex';
 }
 
-// Otimizar imagem usando Canvas para upload rápido e leve
-function otimizarImagem(file, maxDimensao = 1600, qualidade = 0.85) {
+// Otimizar imagem usando Canvas para upload rápido, leve e sem falhas de limite
+function otimizarImagem(file, maxDimensao = 1200, qualidade = 0.78) {
   return new Promise((resolve) => {
     const img = new Image();
     const reader = new FileReader();
@@ -570,6 +568,8 @@ async function carregarFotosAdmin() {
     console.error('Erro ao carregar fotos:', err);
     listaFotos.innerHTML = `<p class="loading" style="grid-column: 1 / -1;">Erro ao carregar fotos. Verifique a tabela fotos no Supabase.</p>`;
   }
+}
+
 carregarFotosAdmin();
 
 // Escutar alterações de fotos em tempo real no admin

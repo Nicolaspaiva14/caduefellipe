@@ -75,14 +75,14 @@
       <h2>Adicionar Foto na Galeria</h2>
 
       <form id="fotoForm">
-        <!-- Input de arquivo invisível ativado pelo dropzone -->
+        <!-- Input de arquivo ativado pelo dropzone/label -->
         <input type="file" id="fotoArquivo" accept="image/*" style="display: none;">
 
-        <div class="upload-dropzone" id="fotoDropzone">
+        <label for="fotoArquivo" class="upload-dropzone" id="fotoDropzone" style="cursor: pointer; display: flex;">
           <div class="upload-icon">📷</div>
-          <div class="upload-text">Clique ou arraste uma foto aqui</div>
-          <div class="upload-hint">Formatos: JPG, PNG, WEBP (otimização automática)</div>
-        </div>
+          <div class="upload-text">Clique aqui ou arraste para escolher uma foto</div>
+          <div class="upload-hint">Formatos: JPG, PNG, WEBP (abre a galeria do seu celular/computador)</div>
+        </label>
 
         <div class="preview-container" id="fotoPreviewContainer">
           <img id="fotoPreviewImg" src="" alt="Prévia da foto">
@@ -129,7 +129,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/admin.js?v=4"></script>
+<script src="js/admin.js?v=5"></script>
 
 </body>
 </html>

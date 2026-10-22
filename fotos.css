@@ -192,15 +192,79 @@
 
 /* ---------- RESPONSIVIDADE ---------- */
 @media (max-width: 900px) {
-  .fotos-container { padding: calc(var(--header-h) + 40px) 28px 60px; }
-  .galeria { grid-template-columns: repeat(2, 1fr); }
-  .foto-destaque { grid-column: span 2; }
+  .fotos-container {
+    padding: calc(var(--header-h) + 30px) 20px 100px;
+  }
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .foto-destaque {
+    grid-column: span 2;
+  }
 }
 
-@media (max-width: 600px) {
-  .fotos-container { padding: calc(var(--header-h) + 24px) 16px 50px; }
-  .galeria { grid-template-columns: 1fr; gap: 12px; }
-  .foto-destaque { grid-column: span 1; }
-  .lightbox-prev { left: 8px; }
-  .lightbox-next { right: 8px; }
+@media (max-width: 540px) {
+  .fotos-container {
+    padding: calc(var(--header-h) + 20px) 14px 110px;
+  }
+
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .foto-card {
+    border-radius: 12px;
+  }
+
+  .foto-card img {
+    height: 180px;
+  }
+
+  .foto-destaque {
+    grid-column: span 2;
+  }
+
+  .foto-destaque img {
+    height: 240px;
+  }
+
+  .foto-legenda {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  /* Lightbox adaptado para telas de celular */
+  .lightbox-figure {
+    max-width: 95vw;
+    max-height: 82dvh;
+  }
+
+  .lightbox-figure img {
+    max-height: 70dvh;
+    border-radius: 8px;
+  }
+
+  .lightbox-close {
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .lightbox-prev {
+    left: 10px;
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+
+  .lightbox-next {
+    right: 10px;
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
 }

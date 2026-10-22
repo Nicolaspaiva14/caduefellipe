@@ -89,39 +89,47 @@
           <input
             type="text"
             id="depoimento-nome"
+            name="nome"
             class="avaliar-input"
             placeholder="Seu Nome completo"
+            autocomplete="name"
+            aria-label="Seu nome completo"
             required
           />
           <input
             type="text"
             id="depoimento-cidade"
+            name="cidade"
             class="avaliar-input"
             placeholder="Sua Cidade - UF (ex: Campinas - SP)"
+            autocomplete="address-level2"
+            aria-label="Sua cidade e estado"
             required
           />
         </div>
 
-        <div class="estrelas-rating">
+        <div class="estrelas-rating" role="radiogroup" aria-label="Avaliação em estrelas">
           <span>Sua Nota:</span>
           <div class="estrelas-opcoes">
-            <input type="radio" name="estrelas" id="star5" value="5" checked />
+            <input type="radio" name="estrelas" id="star5" value="5" checked aria-label="5 estrelas" />
             <label for="star5" title="5 estrelas">★</label>
-            <input type="radio" name="estrelas" id="star4" value="4" />
+            <input type="radio" name="estrelas" id="star4" value="4" aria-label="4 estrelas" />
             <label for="star4" title="4 estrelas">★</label>
-            <input type="radio" name="estrelas" id="star3" value="3" />
+            <input type="radio" name="estrelas" id="star3" value="3" aria-label="3 estrelas" />
             <label for="star3" title="3 estrelas">★</label>
-            <input type="radio" name="estrelas" id="star2" value="2" />
+            <input type="radio" name="estrelas" id="star2" value="2" aria-label="2 estrelas" />
             <label for="star2" title="2 estrelas">★</label>
-            <input type="radio" name="estrelas" id="star1" value="1" />
+            <input type="radio" name="estrelas" id="star1" value="1" aria-label="1 estrela" />
             <label for="star1" title="1 estrela">★</label>
           </div>
         </div>
 
         <textarea
           id="depoimento-texto"
+          name="comentario"
           class="avaliar-textarea"
           placeholder="Escreva como foi o show, o que mais gostou e mande um recado para Cadu & Fellipe…"
+          aria-label="Escreva seu comentário sobre o show"
           required
         ></textarea>
 

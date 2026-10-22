@@ -267,10 +267,66 @@ select.field-input option {
 
 /* ---------- RESPONSIVIDADE ---------- */
 @media (max-width: 900px) {
-  .contato-container { padding: calc(var(--header-h) + 40px) 32px 60px; }
-  .contato-grid { grid-template-columns: 1fr; gap: 40px; }
+  .contato-container {
+    padding: calc(var(--header-h) + 30px) 20px 100px;
+  }
+  .contato-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
 @media (max-width: 480px) {
-  .contato-container { padding: calc(var(--header-h) + 24px) 18px 50px; }
+  .contato-container {
+    padding: calc(var(--header-h) + 20px) 16px 110px;
+  }
+
+  .contato-intro {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .canal-item {
+    padding: 16px;
+    border-radius: 14px;
+    gap: 14px;
+  }
+
+  .canal-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 20px;
+  }
+
+  .canal-titulo {
+    font-size: 14px;
+  }
+
+  .canal-valor {
+    font-size: 13px;
+  }
+
+  /* Previne zoom automático indesejado no Safari/Chrome mobile */
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 16px;
+    padding: 13px 16px;
+    border-radius: 10px;
+  }
+
+  .form-label {
+    font-size: 13px;
+  }
+
+  .btn-enviar {
+    height: 52px;
+    border-radius: 12px;
+  }
+
+  .btn-enviar .btn-text {
+    font-size: 14px;
+  }
 }

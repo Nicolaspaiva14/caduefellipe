@@ -761,19 +761,61 @@
 
 @media (max-width: 640px) {
   .pacotes-container {
-    padding: calc(var(--header-h) + 40px) 20px 80px;
+    padding: calc(var(--header-h) + 30px) 18px 90px;
   }
 
   .pacote-card {
-    padding: 30px 22px;
+    padding: 26px 18px;
+    border-radius: 18px;
   }
 
   .diferenciais-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 20px;
   }
 
   .pacotes-diferenciais {
-    padding: 30px 20px;
+    padding: 26px 18px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pacotes-container {
+    padding: calc(var(--header-h) + 20px) 14px 110px;
+  }
+
+  .pacote-titulo {
+    font-size: 20px;
+  }
+
+  .pacote-preco-valor {
+    font-size: 28px;
+  }
+
+  .pacote-itens li {
+    font-size: 13.5px;
+    gap: 10px;
+  }
+
+  .btn-pacote-whatsapp,
+  .btn-cta-zap {
+    min-height: 48px;
+    padding: 13px 20px;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    width: 100%;
+  }
+
+  .diferencial-card {
+    padding: 18px 14px;
+  }
+
+  .diferencial-card h3 {
+    font-size: 16px;
+  }
+
+  .diferencial-card p {
+    font-size: 13px;
   }
 }

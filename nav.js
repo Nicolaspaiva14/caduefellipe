@@ -1,78 +1,83 @@
 /* ============================================================
-   NAV.JS — hamburger menu + scroll-to-top (shared)
+   NAV.JS — Hamburger menu mobile nativo + Scroll-to-top (shared)
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- HAMBURGER ---------- */
+  /* ---------- HAMBURGER MENU MOBILE ---------- */
   const btn = document.querySelector('.hamburger');
   const nav = document.querySelector('.main-nav');
 
   if (btn && nav) {
     const links = nav.querySelectorAll('a');
 
-function resetLinks() {
-  links.forEach(a => {
-    a.style.animation = '';
-    a.style.opacity = '';
-    a.style.transform = '';
-  });
-}
+    function openMenu() {
+      btn.classList.add('open');
+      nav.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-label', 'Fechar menu');
+      document.body.classList.add('nav-locked');
+    }
 
-function animateLinks() {
-  links.forEach(a => {
-    a.style.animation = '';
-  });
-}
+    function closeMenu() {
+      btn.classList.remove('open');
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Abrir menu');
+      document.body.classList.remove('nav-locked');
+    }
 
-    // Estado inicial: links ocultos
-    const isMobile = () => window.innerWidth <= 900;
-    if (isMobile()) resetLinks();
-
-    window.addEventListener('resize', () => {
-      if (!isMobile()) {
-        // Desktop: remove os estilos inline para o CSS desktop assumir
-        links.forEach(a => {
-          a.style.animation = '';
-          a.style.opacity   = '';
-          a.style.transform = '';
-        });
-      } else if (!nav.classList.contains('open')) {
-        resetLinks();
-      }
-    });
-
-    btn.addEventListener('click', () => {
-      const opening = !nav.classList.contains('open');
-      btn.classList.toggle('open');
-      nav.classList.toggle('open');
-      btn.setAttribute('aria-expanded', opening);
-      document.body.style.overflow = opening ? 'hidden' : '';
-
-      if (opening && isMobile()) {
-        animateLinks();
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = nav.classList.contains('open');
+      if (isOpen) {
+        closeMenu();
       } else {
-        resetLinks();
+        openMenu();
       }
     });
 
-    // Fecha ao clicar em qualquer link
-    links.forEach(a => {
-      a.addEventListener('click', () => {
-        btn.classList.remove('open');
-        nav.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-        if (isMobile()) resetLinks();
+    // Fecha ao clicar em qualquer link de navegação
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
       });
+    });
+
+    // Fecha ao clicar fora do menu (no backdrop)
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Fecha ao pressionar Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    // Fecha no resize para desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900 && nav.classList.contains('open')) {
+        closeMenu();
+      }
     });
   }
 
   /* ---------- SCROLL TO TOP ---------- */
   const topBtn = document.querySelector('.scroll-to-top');
   if (topBtn) {
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      topBtn.classList.toggle('show', window.scrollY > 200);
-    });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          topBtn.classList.toggle('show', window.scrollY > 280);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
 
     topBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -80,9 +85,7 @@ function animateLinks() {
     });
   }
 
-
-
-  /* ---------- ATALHO TECLADO (Ctrl + Shift + A ou Cmd + Shift + A) ---------- */
+  /* ---------- ATALHO TECLADO ADMIN (Ctrl + Shift + A) ---------- */
   window.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
       e.preventDefault();

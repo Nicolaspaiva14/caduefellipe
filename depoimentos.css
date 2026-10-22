@@ -343,24 +343,86 @@
 /* ---------- RESPONSIVIDADE ---------- */
 @media (max-width: 900px) {
   .depoimentos-container {
-    padding: calc(var(--header-h) + 40px) 24px 80px;
+    padding: calc(var(--header-h) + 30px) 20px 100px;
   }
   .comentarios-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
   .stats-banner {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
+    padding: 20px;
   }
   .stat-item:not(:last-child) {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 15px;
+    padding-bottom: 16px;
   }
   .avaliar-secao {
-    padding: 30px 20px;
+    padding: 28px 18px;
+    border-radius: 18px;
   }
   .avaliar-form-row {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .depoimentos-container {
+    padding: calc(var(--header-h) + 20px) 16px 110px;
+  }
+
+  .depoimentos-intro p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .stat-num {
+    font-size: 32px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .comentario-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .comentario-texto {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Evita zoom automático no iPhone ao tocar nos inputs */
+  .avaliar-input,
+  .avaliar-textarea {
+    font-size: 16px;
+    padding: 13px 16px;
+    border-radius: 10px;
+  }
+
+  .estrelas-opcoes label {
+    font-size: 28px;
+    padding: 4px;
+    min-width: 36px;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-enviar-avaliacao {
+    height: 52px;
+    border-radius: 12px;
+  }
+
+  .btn-enviar-avaliacao .btn-text {
+    font-size: 14px;
+    letter-spacing: 1px;
   }
 }

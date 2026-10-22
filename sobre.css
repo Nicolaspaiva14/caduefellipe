@@ -652,44 +652,81 @@
 @media (max-width: 900px) {
 
   .sobre-container {
-    padding:
-      calc(var(--header-h) + 50px)
-      30px
-      80px;
+    padding: calc(var(--header-h) + 40px) 24px 100px;
   }
 
   .sobre-cards,
   .sobre-identidade {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .sobre-quote {
-    padding: 38px 30px;
+    padding: 36px 26px;
   }
 }
 
 @media (max-width: 600px) {
 
   .sobre-container {
-    padding:
-      calc(var(--header-h) + 30px)
-      18px
-      60px;
+    padding: calc(var(--header-h) + 24px) 16px 110px;
   }
 
   .sobre-hero .section-title {
-    letter-spacing: 2px;
+    font-size: clamp(28px, 8vw, 42px);
+    letter-spacing: 1.5px;
+  }
+
+  .sobre-hero-sub {
+    font-size: 13px;
+    letter-spacing: 2.5px;
+  }
+
+  .sobre-badge-wrap {
+    margin-bottom: 40px;
+  }
+
+  .sobre-badge {
+    padding: 10px 18px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
   }
 
   .sobre-quote {
-    padding: 28px 22px;
+    padding: 26px 18px;
+    border-radius: 14px;
+    border-left-width: 3px;
+  }
+
+  .sobre-quote p {
+    font-size: 15px;
+    line-height: 1.7;
   }
 
   .sobre-card {
-    padding: 28px 22px;
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .sobre-card h3 {
+    font-size: 20px;
+  }
+
+  .sobre-card p {
+    font-size: 14px;
+    line-height: 1.7;
   }
 
   .sobre-closing {
-    padding: 46px 24px;
+    padding: 36px 18px;
+    border-radius: 16px;
+  }
+
+  .sobre-closing h3 {
+    font-size: 24px;
+  }
+
+  .sobre-closing p {
+    font-size: 14px;
   }
 }

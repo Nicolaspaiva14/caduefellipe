@@ -47,6 +47,7 @@
 .foto-card img {
   width: 100%;
   height: auto;          /* altura natural da imagem */
+  max-height: 420px;     /* limita fotos muito altas sem esticar */
   display: block;
   object-fit: contain;   /* nunca corta nem estica */
   background: rgba(0,0,0,0.4); /* fundo neutro caso haja espaço vazio */
@@ -221,6 +222,7 @@
   /* Imagens em proporção natural também no celular */
   .foto-card img {
     height: auto;
+    max-height: 280px;  /* limite confortável no celular */
     width: 100%;
   }
 

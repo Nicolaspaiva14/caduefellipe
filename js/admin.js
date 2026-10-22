@@ -6,6 +6,45 @@ const supabaseClient = window.supabase.createClient(
   supabaseKey
 );
 
+/* ============================================================
+   MODAL DE CONFIRMAÇÃO CUSTOMIZADO
+   Substitui o confirm() nativo que é bloqueado em mobile.
+   Uso: const ok = await confirmarAcao('Sua mensagem aqui');
+   ============================================================ */
+function confirmarAcao(mensagem) {
+  return new Promise((resolve) => {
+    const overlay   = document.getElementById('confirm-overlay');
+    const msgEl     = document.getElementById('confirm-msg');
+    const btnOk     = document.getElementById('confirm-ok');
+    const btnCancel = document.getElementById('confirm-cancelar');
+
+    if (!overlay) {
+      // fallback para confirm() caso o modal não exista no HTML
+      resolve(window.confirm(mensagem));
+      return;
+    }
+
+    msgEl.textContent = mensagem;
+    overlay.classList.add('ativo');
+
+    function fechar(resultado) {
+      overlay.classList.remove('ativo');
+      btnOk.removeEventListener('click', onOk);
+      btnCancel.removeEventListener('click', onCancel);
+      overlay.removeEventListener('click', onOutside);
+      resolve(resultado);
+    }
+
+    function onOk()      { fechar(true);  }
+    function onCancel()  { fechar(false); }
+    function onOutside(e){ if (e.target === overlay) fechar(false); }
+
+    btnOk.addEventListener('click', onOk);
+    btnCancel.addEventListener('click', onCancel);
+    overlay.addEventListener('click', onOutside);
+  });
+}
+
 const form = document.getElementById('showForm');
 const lista = document.getElementById('lista');
 
@@ -92,7 +131,7 @@ async function carregarShows() {
     item.querySelector('.delete')
       .addEventListener('click', async () => {
 
-        const confirmar = confirm(
+        const confirmar = await confirmarAcao(
           'Deseja excluir este show?'
         );
 
@@ -212,7 +251,7 @@ async function carregarMensagens() {
     `;
 
     item.querySelector('.delete').addEventListener('click', async () => {
-      const confirmar = confirm('Deseja excluir permanentemente esta mensagem?');
+      const confirmar = await confirmarAcao('Deseja excluir permanentemente esta mensagem de ' + (msg.nome || 'contato') + '?');
       if (!confirmar) return;
 
       const { error: deleteError } = await supabaseClient
@@ -532,7 +571,7 @@ async function carregarFotosAdmin() {
       `;
 
       card.querySelector('.foto-admin-delete').addEventListener('click', async () => {
-        const confirmar = confirm(`Deseja remover esta foto da galeria?\n"${foto.descricao}"`);
+        const confirmar = await confirmarAcao(`Remover "${foto.descricao}" da galeria para todos?`);
         if (!confirmar) return;
 
         // Tentar remover do Storage se for arquivo armazenado
@@ -681,7 +720,7 @@ async function carregarComentariosAdmin() {
       `;
 
       card.querySelector('.delete').addEventListener('click', async () => {
-        const confirmar = confirm(`Deseja apagar definitivamente o comentário de "${item.nome}" para TODOS os usuários?`);
+        const confirmar = await confirmarAcao(`Apagar definitivamente o comentário de "${item.nome}" para TODOS os usuários?`);
         if (!confirmar) return;
 
         const { error: delError } = await supabaseClient
@@ -713,7 +752,7 @@ async function carregarComentariosAdmin() {
 
 if (btnRestaurarPadrao) {
   btnRestaurarPadrao.addEventListener('click', async () => {
-    const confirmar = confirm('Deseja inserir os comentários de exemplo no banco de dados Supabase?');
+    const confirmar = await confirmarAcao('Deseja inserir os comentários de exemplo no banco de dados?');
     if (!confirmar) return;
 
     btnRestaurarPadrao.disabled = true;

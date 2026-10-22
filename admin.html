@@ -13,9 +13,103 @@
 <link rel="icon" type="image/png" href="img/logo preta.png" />
 
 <link rel="stylesheet" href="css/admin.css">
+
+<style>
+/* ====== MODAL DE CONFIRMAÇÃO (substitui confirm() nativo, bloqueado em mobile) ====== */
+#confirm-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#confirm-overlay.ativo {
+  display: flex;
+}
+#confirm-box {
+  background: linear-gradient(145deg, #1a1a1a, #111);
+  border: 1px solid rgba(212,175,55,0.35);
+  border-radius: 20px;
+  padding: 32px 28px 24px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  text-align: center;
+  animation: popIn .22s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+#confirm-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+#confirm-msg {
+  font-size: 16px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.55;
+  margin-bottom: 24px;
+  font-family: 'Inter', sans-serif;
+}
+.confirm-btns {
+  display: flex;
+  gap: 12px;
+}
+#confirm-cancelar {
+  flex: 1;
+  height: 52px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.75);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+  touch-action: manipulation;
+}
+#confirm-cancelar:hover, #confirm-cancelar:active {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.35);
+}
+#confirm-ok {
+  flex: 1;
+  height: 52px;
+  background: crimson;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+  touch-action: manipulation;
+}
+#confirm-ok:hover, #confirm-ok:active {
+  background: #a00025;
+  transform: scale(1.03);
+}
+</style>
 </head>
 
 <body>
+
+<!-- MODAL DE CONFIRMAÇÃO CUSTOMIZADO (funciona em celular, substitui confirm() nativo) -->
+<div id="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-msg">
+  <div id="confirm-box">
+    <div id="confirm-icon">🗑️</div>
+    <p id="confirm-msg">Deseja excluir este item?</p>
+    <div class="confirm-btns">
+      <button id="confirm-cancelar" type="button">Cancelar</button>
+      <button id="confirm-ok" type="button">Excluir</button>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 
@@ -129,7 +223,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/admin.js?v=5"></script>
+<script src="js/admin.js?v=6"></script>
 
 </body>
 </html>

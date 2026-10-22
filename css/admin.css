@@ -168,6 +168,11 @@ button {
   cursor: pointer;
 
   transition: .25s;
+
+  /* Remove o delay de 300ms em mobile (toque funciona na hora) */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 button:hover {

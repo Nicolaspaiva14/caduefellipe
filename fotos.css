@@ -19,8 +19,9 @@
 .galeria {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
+  grid-auto-rows: auto;
   gap: 16px;
+  align-items: start;
 }
 
 /* Card base */
@@ -33,7 +34,7 @@
   cursor: pointer;
   outline: none;
   transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
-  aspect-ratio: 4/3;
+  /* Sem aspect-ratio fixo: cada imagem fica na sua proporção natural */
 }
 
 .foto-card:hover,
@@ -45,11 +46,11 @@
 
 .foto-card img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transition: transform .5s ease;
+  height: auto;          /* altura natural da imagem */
   display: block;
+  object-fit: contain;   /* nunca corta nem estica */
+  background: rgba(0,0,0,0.4); /* fundo neutro caso haja espaço vazio */
+  transition: transform .5s ease;
 }
 
 .foto-card:hover img { transform: scale(1.07); }
@@ -100,10 +101,9 @@
 
 .foto-card:hover::after { opacity: 1; }
 
-/* Destaque: ocupa 2 colunas */
+/* Destaque: ocupa 2 colunas (sem aspect-ratio fixo — respeita a proporção da imagem) */
 .foto-destaque {
   grid-column: span 2;
-  aspect-ratio: 16/9;
 }
 
 /* Nota inferior */
@@ -218,16 +218,14 @@
     border-radius: 12px;
   }
 
+  /* Imagens em proporção natural também no celular */
   .foto-card img {
-    height: 180px;
+    height: auto;
+    width: 100%;
   }
 
   .foto-destaque {
     grid-column: span 2;
-  }
-
-  .foto-destaque img {
-    height: 240px;
   }
 
   .foto-legenda {

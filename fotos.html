@@ -217,16 +217,17 @@
       if (e.key === 'ArrowRight') { current = (current + 1) % images.length; showImage(); }
     });
 
-    // Inicia com as fotos estáticas atuais como base
+    // Inicia vínculo de lightbox
     vincularLightbox();
 
     // Carregar fotos do Supabase
+    const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
     async function carregarFotosSupabase() {
-      if (!window.supabase) return;
+      if (!supabaseClient) return;
 
       try {
-        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        const { data, error } = await client
+        const { data, error } = await supabaseClient
           .from('fotos')
           .select('*')
           .order('criado_em', { ascending: false });
@@ -236,36 +237,59 @@
           return;
         }
 
-        if (data && data.length > 0) {
-          // Limpa galeria e renderiza fotos do banco
-          galeriaEl.innerHTML = '';
+        // Limpa a galeria para sincronizar 100% com o banco (se uma foto foi apagada no admin, ela sai daqui imediatamente)
+        galeriaEl.innerHTML = '';
 
-          data.forEach((foto, index) => {
-            const fig = document.createElement('figure');
-            // Primeira foto pode ter destaque
-            fig.className = index === 0 ? 'foto-card foto-destaque' : 'foto-card';
-
-            fig.innerHTML = `
-              <img
-                src="${foto.url}"
-                alt="${foto.descricao}"
-                loading="lazy"
-              />
-              <figcaption class="foto-caption">${foto.descricao}</figcaption>
-            `;
-
-            galeriaEl.appendChild(fig);
-          });
-
-          // Atualiza lightbox com as novas fotos
+        if (!data || data.length === 0) {
+          galeriaEl.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: rgba(255, 255, 255, 0.6);">
+              <p style="font-size: 16px; margin-bottom: 8px;">Nenhuma foto publicada na galeria no momento.</p>
+              <p style="font-size: 13px; color: var(--gold);">Novas fotos de shows e bastidores serão publicadas em breve!</p>
+            </div>
+          `;
           vincularLightbox();
+          return;
         }
+
+        data.forEach((foto, index) => {
+          const fig = document.createElement('figure');
+          fig.className = index === 0 ? 'foto-card foto-destaque' : 'foto-card';
+
+          fig.innerHTML = `
+            <img
+              src="${foto.url}"
+              alt="${foto.descricao}"
+              loading="lazy"
+            />
+            <figcaption class="foto-caption">${foto.descricao}</figcaption>
+          `;
+
+          galeriaEl.appendChild(fig);
+        });
+
+        // Atualiza referências do lightbox
+        vincularLightbox();
+
       } catch (e) {
         console.warn('Falha na conexão de fotos:', e);
       }
     }
 
     carregarFotosSupabase();
+
+    // Sincronização em tempo real: quando uma foto for apagada ou adicionada no painel admin, atualiza na hora no site principal
+    if (supabaseClient) {
+      supabaseClient
+        .channel('fotos_tempo_real')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'fotos' },
+          () => {
+            carregarFotosSupabase();
+          }
+        )
+        .subscribe();
+    }
   </script>
 </body>
 </html>

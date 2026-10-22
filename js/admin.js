@@ -277,15 +277,17 @@ if ('Notification' in window && Notification.permission === 'default') {
   Notification.requestPermission();
 }
 
-// Escuta em tempo real do Supabase
+// Escuta em tempo real do Supabase para mensagens
 supabaseClient
   .channel('mensagens_em_tempo_real')
   .on(
     'postgres_changes',
-    { event: 'INSERT', schema: 'public', table: 'mensagens_contato' },
+    { event: '*', schema: 'public', table: 'mensagens_contato' },
     (payload) => {
-      tocarSomNotificacao();
-      exibirNotificacaoNavegador(payload.new);
+      if (payload.eventType === 'INSERT') {
+        tocarSomNotificacao();
+        exibirNotificacaoNavegador(payload.new);
+      }
       carregarMensagens();
     }
   )
@@ -568,9 +570,19 @@ async function carregarFotosAdmin() {
     console.error('Erro ao carregar fotos:', err);
     listaFotos.innerHTML = `<p class="loading" style="grid-column: 1 / -1;">Erro ao carregar fotos. Verifique a tabela fotos no Supabase.</p>`;
   }
-}
-
 carregarFotosAdmin();
+
+// Escutar alterações de fotos em tempo real no admin
+supabaseClient
+  .channel('admin_fotos_realtime')
+  .on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'fotos' },
+    () => {
+      carregarFotosAdmin();
+    }
+  )
+  .subscribe();
 
 /* ============================================================
    GERENCIAMENTO DE COMENTÁRIOS / OPINIÕES DA GALERA NO SUPABASE

@@ -573,46 +573,40 @@ async function carregarFotosAdmin() {
 carregarFotosAdmin();
 
 /* ============================================================
-   GERENCIAMENTO DE COMENTÁRIOS / OPINIÕES DA GALERA
+   GERENCIAMENTO DE COMENTÁRIOS / OPINIÕES DA GALERA NO SUPABASE
    ============================================================ */
 const COMENTARIOS_PADRAO = [
   {
-    id: 'padrao_1',
     nome: 'Mariana Andrade',
     cidade: 'Hortolândia - SP',
     estrelas: '5',
     texto: 'Que show incrível! A energia dos meninos no palco é contagiante do início ao fim. Tocaram os clássicos do sertanejo e as músicas autorais que todo mundo cantou junto. Já estamos esperando o próximo aqui na região!'
   },
   {
-    id: 'padrao_2',
     nome: 'Rodrigo Costa',
     cidade: 'Campinas - SP',
     estrelas: '5',
     texto: 'Contratamos o show para a nossa festa de aniversário e foi um sucesso total. Além de serem músicos de altíssimo nível, são super atenciosos com os convidados. Todos elogiaram muito!'
   },
   {
-    id: 'padrao_3',
     nome: 'Felipe Bueno',
     cidade: 'Paulínia - SP',
     estrelas: '5',
     texto: 'Voz marcante, violão afiado e uma presença de palco sem igual. A dupla entrega emoção e animação sem deixar a pista parar por um minuto. Parabéns Cadu e Fellipe!'
   },
   {
-    id: 'padrao_4',
     nome: 'Beatriz Lima',
     cidade: 'Santos - SP',
     estrelas: '5',
     texto: 'Assisti ao show no MSC Preziosa e fiquei encantada! Sertanejo com muita classe e carisma. Eles conquistaram todo mundo a bordo. Virei fã na hora!'
   },
   {
-    id: 'padrao_5',
     nome: 'Lucas Mendes',
     cidade: 'Americana - SP',
     estrelas: '5',
     texto: 'Profissionalismo impecável de toda a equipe e uma performance que emociona de verdade. A transição das modas apaixonadas para o sertanejo universitário animado é perfeita.'
   },
   {
-    id: 'padrao_6',
     nome: 'Juliana Nogueira',
     cidade: 'Sumaré - SP',
     estrelas: '5',
@@ -623,85 +617,124 @@ const COMENTARIOS_PADRAO = [
 const listaComentariosAdmin = document.getElementById('lista-comentarios-admin');
 const btnRestaurarPadrao = document.getElementById('btnRestaurarPadrao');
 
-function getComentariosAtuais() {
-  try {
-    const iniciado = localStorage.getItem('caduefellipe_comentarios_iniciado');
-    if (!iniciado) {
-      localStorage.setItem('caduefellipe_comentarios_iniciado', '1');
-      localStorage.setItem('caduefellipe_comentarios_lista', JSON.stringify(COMENTARIOS_PADRAO));
-      return COMENTARIOS_PADRAO;
-    }
-    // Já inicializado: retorna o que está salvo (pode ser lista vazia se tudo foi deletado)
-    const raw = localStorage.getItem('caduefellipe_comentarios_lista');
-    return raw ? JSON.parse(raw) : [];
-  } catch (e) {
-    return [];
-  }
-}
-
-function salvarComentarios(lista) {
-  localStorage.setItem('caduefellipe_comentarios_lista', JSON.stringify(lista));
-}
-
-function carregarComentariosAdmin() {
+async function carregarComentariosAdmin() {
   if (!listaComentariosAdmin) return;
-  const lista = getComentariosAtuais();
+  listaComentariosAdmin.innerHTML = '<p class="loading">Carregando comentários do banco de dados...</p>';
 
-  listaComentariosAdmin.innerHTML = '';
+  try {
+    const { data, error } = await supabaseClient
+      .from('comentarios')
+      .select('*')
+      .order('criado_em', { ascending: false });
 
-  if (lista.length === 0) {
-    listaComentariosAdmin.innerHTML = '<p class="loading">Nenhum comentário publicado no momento.</p>';
-    return;
-  }
+    if (error) throw error;
 
-  lista.forEach((item, index) => {
-    const card = document.createElement('div');
-    card.className = 'show';
-    card.style.flexDirection = 'column';
-    card.style.alignItems = 'flex-start';
+    listaComentariosAdmin.innerHTML = '';
 
-    const estrelasTxt = '★'.repeat(Number(item.estrelas) || 5);
+    if (!data || data.length === 0) {
+      listaComentariosAdmin.innerHTML = '<p class="loading">Nenhum comentário publicado no banco de dados.</p>';
+      return;
+    }
 
-    card.innerHTML = `
-      <div class="info" style="width: 100%; margin-bottom: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-          <div class="cidade" style="font-size: 16px;">
-            ${item.nome} 
-            <span style="font-size: 13px; color: var(--gold); font-weight: normal; margin-left: 8px;">
-              📍 ${item.cidade || 'Não informada'}
-            </span>
+    data.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'show';
+      card.style.flexDirection = 'column';
+      card.style.alignItems = 'flex-start';
+
+      const estrelasTxt = '★'.repeat(Number(item.estrelas) || 5);
+      const dataFormatada = item.criado_em
+        ? new Date(item.criado_em).toLocaleDateString('pt-BR') + ' às ' + new Date(item.criado_em).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        : '';
+
+      card.innerHTML = `
+        <div class="info" style="width: 100%; margin-bottom: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 8px;">
+            <div class="cidade" style="font-size: 16px;">
+              ${item.nome} 
+              <span style="font-size: 13px; color: var(--gold); font-weight: normal; margin-left: 8px;">
+                📍 ${item.cidade || 'Não informada'}
+              </span>
+            </div>
+            <div style="color: var(--gold); font-size: 16px; letter-spacing: 2px;">${estrelasTxt}</div>
           </div>
-          <div style="color: var(--gold); font-size: 16px; letter-spacing: 2px;">${estrelasTxt}</div>
+          ${dataFormatada ? `<div class="data" style="margin-top: 4px; font-size: 12px; opacity: 0.7;">Enviado em: ${dataFormatada}</div>` : ''}
         </div>
-      </div>
-      <div class="mensagem-texto" style="width: 100%; padding: 14px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.9); font-style: italic;">
-        "${item.texto}"
-      </div>
-      <button class="delete" style="margin-top: 12px; align-self: flex-end;" type="button">
-        🗑️ Excluir Comentário
-      </button>
-    `;
+        <div class="mensagem-texto" style="width: 100%; padding: 14px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.9); font-style: italic;">
+          "${item.texto}"
+        </div>
+        <button class="delete" style="margin-top: 12px; align-self: flex-end;" type="button">
+          🗑️ Excluir Definitivamente
+        </button>
+      `;
 
-    card.querySelector('.delete').addEventListener('click', () => {
-      const confirmar = confirm(`Deseja remover o comentário de "${item.nome}" da página de Opiniões?`);
-      if (!confirmar) return;
+      card.querySelector('.delete').addEventListener('click', async () => {
+        const confirmar = confirm(`Deseja apagar definitivamente o comentário de "${item.nome}" para TODOS os usuários?`);
+        if (!confirmar) return;
 
-      const atualizados = getComentariosAtuais().filter((_, i) => i !== index);
-      salvarComentarios(atualizados);
-      carregarComentariosAdmin();
+        const { error: delError } = await supabaseClient
+          .from('comentarios')
+          .delete()
+          .eq('id', item.id);
+
+        if (delError) {
+          alert('Erro ao excluir comentário no banco de dados: ' + delError.message);
+          return;
+        }
+
+        carregarComentariosAdmin();
+      });
+
+      listaComentariosAdmin.appendChild(card);
     });
 
-    listaComentariosAdmin.appendChild(card);
-  });
+  } catch (err) {
+    console.error('Erro ao carregar comentários do admin:', err);
+    listaComentariosAdmin.innerHTML = `
+      <p class="loading">
+        Erro ao carregar comentários do Supabase.<br>
+        Certifique-se de que a tabela <code>comentarios</code> foi criada no Supabase (veja o arquivo <code>comentarios.sql</code>).
+      </p>
+    `;
+  }
 }
 
 if (btnRestaurarPadrao) {
-  btnRestaurarPadrao.addEventListener('click', () => {
-    const confirmar = confirm('Deseja restaurar os comentários originais de exemplo da página?');
+  btnRestaurarPadrao.addEventListener('click', async () => {
+    const confirmar = confirm('Deseja inserir os comentários de exemplo no banco de dados Supabase?');
     if (!confirmar) return;
-    salvarComentarios(COMENTARIOS_PADRAO);
-    carregarComentariosAdmin();
+
+    btnRestaurarPadrao.disabled = true;
+    btnRestaurarPadrao.textContent = 'Inserindo no banco...';
+
+    try {
+      const { error } = await supabaseClient
+        .from('comentarios')
+        .insert(COMENTARIOS_PADRAO);
+
+      if (error) throw error;
+
+      alert('Comentários de exemplo adicionados com sucesso ao banco de dados!');
+      carregarComentariosAdmin();
+    } catch (e) {
+      alert('Erro ao restaurar: ' + e.message);
+    } finally {
+      btnRestaurarPadrao.disabled = false;
+      btnRestaurarPadrao.textContent = 'Restaurar Comentários Iniciais';
+    }
   });
 }
 
 carregarComentariosAdmin();
+
+// Escutar comentários em tempo real no admin
+supabaseClient
+  .channel('admin_comentarios_realtime')
+  .on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'comentarios' },
+    () => {
+      carregarComentariosAdmin();
+    }
+  )
+  .subscribe();

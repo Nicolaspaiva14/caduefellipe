@@ -25,15 +25,20 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,180,0,0.18) 0%, transparent 70%),
-    radial-gradient(ellipse 70% 80% at 50% 0%,   rgba(120,60,0,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255, 180, 0, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 0%, rgba(120, 60, 0, 0.25) 0%, transparent 70%),
     linear-gradient(160deg, #0a0600 0%, #1a0c00 40%, #0d0500 100%);
   animation: splashBgPulse 6s ease-in-out infinite alternate;
 }
 
 @keyframes splashBgPulse {
-  from { filter: brightness(1); }
-  to   { filter: brightness(1.18); }
+  from {
+    filter: brightness(1);
+  }
+
+  to {
+    filter: brightness(1.18);
+  }
 }
 
 /* Partículas douradas flutuantes */
@@ -46,20 +51,81 @@
   opacity: 0;
   animation: particleFloat 5s ease-in-out infinite;
 }
-.splash-particles span:nth-child(1) { left: 10%;  top: 80%; animation-delay: 0s;    animation-duration: 6s; }
-.splash-particles span:nth-child(2) { left: 25%;  top: 70%; animation-delay: 0.8s;  animation-duration: 7s; }
-.splash-particles span:nth-child(3) { left: 50%;  top: 90%; animation-delay: 1.5s;  animation-duration: 5s; }
-.splash-particles span:nth-child(4) { left: 70%;  top: 75%; animation-delay: 0.3s;  animation-duration: 8s; }
-.splash-particles span:nth-child(5) { left: 85%;  top: 85%; animation-delay: 2s;    animation-duration: 6s; }
-.splash-particles span:nth-child(6) { left: 40%;  top: 60%; animation-delay: 1.2s;  animation-duration: 7s; }
-.splash-particles span:nth-child(7) { left: 15%;  top: 50%; animation-delay: 0.5s;  animation-duration: 9s; }
-.splash-particles span:nth-child(8) { left: 60%;  top: 65%; animation-delay: 1.8s;  animation-duration: 5s; }
+
+.splash-particles span:nth-child(1) {
+  left: 10%;
+  top: 80%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+
+.splash-particles span:nth-child(2) {
+  left: 25%;
+  top: 70%;
+  animation-delay: 0.8s;
+  animation-duration: 7s;
+}
+
+.splash-particles span:nth-child(3) {
+  left: 50%;
+  top: 90%;
+  animation-delay: 1.5s;
+  animation-duration: 5s;
+}
+
+.splash-particles span:nth-child(4) {
+  left: 70%;
+  top: 75%;
+  animation-delay: 0.3s;
+  animation-duration: 8s;
+}
+
+.splash-particles span:nth-child(5) {
+  left: 85%;
+  top: 85%;
+  animation-delay: 2s;
+  animation-duration: 6s;
+}
+
+.splash-particles span:nth-child(6) {
+  left: 40%;
+  top: 60%;
+  animation-delay: 1.2s;
+  animation-duration: 7s;
+}
+
+.splash-particles span:nth-child(7) {
+  left: 15%;
+  top: 50%;
+  animation-delay: 0.5s;
+  animation-duration: 9s;
+}
+
+.splash-particles span:nth-child(8) {
+  left: 60%;
+  top: 65%;
+  animation-delay: 1.8s;
+  animation-duration: 5s;
+}
 
 @keyframes particleFloat {
-  0%   { opacity: 0;    transform: translateY(0)   scale(1); }
-  20%  { opacity: 0.9; }
-  80%  { opacity: 0.6; }
-  100% { opacity: 0;    transform: translateY(-120px) scale(1.5); }
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+
+  20% {
+    opacity: 0.9;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.5);
+  }
 }
 
 /* Conteúdo central */
@@ -78,13 +144,18 @@
 .splash-logo {
   width: clamp(80px, 18vw, 130px);
   margin-bottom: 24px;
-  filter: drop-shadow(0 0 24px rgba(255,200,0,0.45));
+  filter: drop-shadow(0 0 24px rgba(255, 200, 0, 0.45));
   animation: splashLogoGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes splashLogoGlow {
-  from { filter: drop-shadow(0 0 16px rgba(255,200,0,0.3)); }
-  to   { filter: drop-shadow(0 0 36px rgba(255,200,0,0.7)); }
+  from {
+    filter: drop-shadow(0 0 16px rgba(255, 200, 0, 0.3));
+  }
+
+  to {
+    filter: drop-shadow(0 0 36px rgba(255, 200, 0, 0.7));
+  }
 }
 
 .splash-pre {
@@ -92,7 +163,7 @@
   font-size: clamp(11px, 1.8vw, 14px);
   letter-spacing: 5px;
   text-transform: uppercase;
-  color: rgba(255,200,0,0.7);
+  color: rgba(255, 200, 0, 0.7);
   margin-bottom: 8px;
   animation: fadeUp 1s ease 0.2s both;
 }
@@ -105,7 +176,7 @@
   letter-spacing: 4px;
   text-transform: uppercase;
   line-height: 1;
-  text-shadow: 0 0 60px rgba(255,200,0,0.25), 0 4px 20px rgba(0,0,0,0.8);
+  text-shadow: 0 0 60px rgba(255, 200, 0, 0.25), 0 4px 20px rgba(0, 0, 0, 0.8);
   animation: fadeUp 1s ease 0.4s both;
 }
 
@@ -119,7 +190,7 @@
   font-size: clamp(13px, 1.6vw, 16px);
   font-weight: 300;
   letter-spacing: 2px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.7;
   animation: fadeUp 1s ease 0.6s both;
 }
@@ -137,7 +208,7 @@
   font-size: clamp(11px, 1.5vw, 13px);
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
   margin-bottom: 32px;
   animation: fadeUp 1s ease 0.8s both;
 }
@@ -168,7 +239,7 @@
 .splash-btn:focus-visible {
   background: var(--gold);
   color: #000;
-  box-shadow: 0 0 40px rgba(255,200,0,0.5), 0 0 80px rgba(255,200,0,0.2);
+  box-shadow: 0 0 40px rgba(255, 200, 0, 0.5), 0 0 80px rgba(255, 200, 0, 0.2);
 }
 
 .splash-btn:active {
@@ -190,7 +261,7 @@
 .splash-btn-ripple {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(255,200,0,0.3) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(255, 200, 0, 0.3) 0%, transparent 70%);
   opacity: 0;
   transform: scale(0);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -208,14 +279,23 @@
   content: '';
   position: absolute;
   inset: -4px;
-  border: 1px solid rgba(255,200,0,0.3);
+  border: 1px solid rgba(255, 200, 0, 0.3);
   border-radius: 4px;
   animation: btnPulse 2.5s ease-in-out 1.5s infinite;
 }
 
 @keyframes btnPulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50%       { opacity: 0;   transform: scale(1.12); }
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
 }
 
 .splash-credit {
@@ -223,13 +303,20 @@
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255, 255, 255, 0.25);
   animation: fadeUp 1s ease 1.2s both;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
@@ -270,12 +357,10 @@
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-    rgba(0,0,0,0.52) 0%,
-    rgba(0,0,0,0.30) 40%,
-    rgba(0,0,0,0.30) 70%,
-    rgba(0,0,0,0.58) 100%
-  );
+  background: linear-gradient(rgba(0, 0, 0, 0.52) 0%,
+      rgba(0, 0, 0, 0.30) 40%,
+      rgba(0, 0, 0, 0.30) 70%,
+      rgba(0, 0, 0, 0.58) 100%);
 }
 
 /* ---------- HERO ---------- */
@@ -296,14 +381,17 @@
   color: var(--white);
   letter-spacing: 4px;
   text-transform: uppercase;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   opacity: 0;
   transform: translateY(28px);
   animation: heroFade 1.2s ease .2s forwards;
 }
 
 @keyframes heroFade {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------- SUBTÍTULO ---------- */
@@ -313,14 +401,21 @@
   font-weight: 400;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.88);
+  color: rgba(255, 255, 255, 0.88);
   animation: subtitleFade 1.2s ease .4s forwards;
   opacity: 0;
 }
 
 @keyframes subtitleFade {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------- COUNTDOWN (dentro do widget fixo) ---------- */
@@ -337,7 +432,7 @@
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.70);
+  color: rgba(255, 255, 255, 0.70);
 }
 
 #countdown-timer {
@@ -346,13 +441,20 @@
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--gold);
-  text-shadow: 0 0 20px rgba(255,204,0,.25);
+  text-shadow: 0 0 20px rgba(255, 204, 0, .25);
   white-space: nowrap;
 }
 
 @keyframes countdownFade {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .next-show-detail {
@@ -360,7 +462,7 @@
   font-weight: 500;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.50);
+  color: rgba(255, 255, 255, 0.50);
   margin-top: 2px;
 }
 
@@ -371,7 +473,7 @@
   gap: 10px;
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .next-show-social .follow-label {
@@ -379,7 +481,7 @@
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.50);
+  color: rgba(255, 255, 255, 0.50);
   white-space: nowrap;
 }
 
@@ -392,7 +494,7 @@
 
 .next-show-social a:hover .follow-icon {
   transform: scale(1.2);
-  filter: drop-shadow(0 0 5px rgba(255,255,255,0.4));
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
 }
 
 /* ---------- BOTÃO AGENDA ---------- */
@@ -404,9 +506,9 @@
   margin-top: 32px;
   width: clamp(190px, 25vw, 270px);
   height: 62px;
-  border: 2px solid rgba(255,255,255,0.55);
+  border: 2px solid rgba(255, 255, 255, 0.55);
   border-radius: 50px;
-  background: rgba(255,255,255,0.10);
+  background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(6px);
   overflow: hidden;
   cursor: pointer;
@@ -417,7 +519,7 @@
 
 .btn-agenda:hover {
   border-color: var(--gold);
-  background: rgba(255,204,0,0.12);
+  background: rgba(255, 204, 0, 0.12);
 }
 
 .btn-text {
@@ -438,13 +540,23 @@
   transition: transform .35s ease, opacity .35s ease;
 }
 
-.btn-agenda:hover .btn-text  { transform: translateY(-30px); opacity: 0; }
-.btn-agenda:hover .btn-arrow { transform: translateX(0);     opacity: 1; }
+.btn-agenda:hover .btn-text {
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+.btn-agenda:hover .btn-arrow {
+  transform: translateX(0);
+  opacity: 1;
+}
 
 /* ---------- RESPONSIVIDADE ---------- */
 @media (max-width: 480px) {
-  .btn-agenda { height: 54px; }
+  .btn-agenda {
+    height: 54px;
+  }
 }
+
 /* ============================================================
    SOCIAL-FOLLOW — override exclusivo da index (com countdown)
    ============================================================ */
@@ -455,16 +567,16 @@
   border-radius: 18px;
   padding: 14px 20px;
   min-width: 220px;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(10px);
-  border-color: rgba(255,255,255,0.14);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .social-divider {
   display: block;
   width: 100%;
   height: 1px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 480px) {

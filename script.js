@@ -2,13 +2,13 @@
 (function () {
   'use strict';
 
-  var video   = document.getElementById('bgVideo');
-  var splash  = document.getElementById('splash');
+  var video    = document.getElementById('bgVideo');
+  var splash   = document.getElementById('splash');
   var btnEnter = document.getElementById('splashEnter');
 
-  if (!video || !splash || !btnEnter) return;
+  if (!video) return;
 
-  // Reforça atributos para iOS
+  // Reforça atributos para reprodução automática sem som (compatível com mobile/iOS)
   video.muted        = true;
   video.defaultMuted = true;
   video.playsInline  = true;
@@ -22,25 +22,62 @@
     if (p && p.catch) p.catch(function () {});
   }
 
-  function dismissSplash() {
-    // 1. Garante que o vídeo está tocando (gesto do usuário = iOS permite)
+  function dismissSplash(imediato) {
+    try {
+      sessionStorage.setItem('splash_dismissed', '1');
+    } catch (e) {}
+
     playVideo();
 
-    // 2. Anima saída do splash
-    splash.classList.add('hidden');
+    if (!splash) return;
 
-    // 3. Remove do DOM após a transição para liberar memória
-    splash.addEventListener('transitionend', function () {
+    if (imediato) {
       splash.remove();
+      return;
+    }
+
+    splash.classList.add('hidden');
+    splash.addEventListener('transitionend', function () {
+      if (splash && splash.parentNode) {
+        splash.remove();
+      }
     }, { once: true });
   }
 
+  // Se clicou na logo, veio de navegação com parâmetro ou já entrou antes: vai direto para os vídeos
+  var params = new URLSearchParams(window.location.search);
+  var pularSplash = params.has('direct') ||
+                    params.has('skipSplash') ||
+                    window.location.hash === '#inicio' ||
+                    (function () {
+                      try { return sessionStorage.getItem('splash_dismissed') === '1'; } catch (e) { return false; }
+                    })() ||
+                    (document.referrer && document.referrer.includes(window.location.host));
+
+  if (pularSplash && splash) {
+    dismissSplash(true);
+  } else {
+    playVideo();
+  }
+
   // Clique no botão ENTRAR
-  btnEnter.addEventListener('click', dismissSplash);
-  btnEnter.addEventListener('touchend', function (e) {
-    e.preventDefault();
-    dismissSplash();
-  }, { passive: false });
+  if (btnEnter) {
+    btnEnter.addEventListener('click', function () {
+      dismissSplash(false);
+    });
+    btnEnter.addEventListener('touchend', function (e) {
+      e.preventDefault();
+      dismissSplash(false);
+    }, { passive: false });
+  }
+
+  // Clique na logo na própria página inicial remove imediatamente o splash se existir
+  var linksInicio = document.querySelectorAll('.logo-link, a[href*="index.html"]');
+  linksInicio.forEach(function (link) {
+    link.addEventListener('click', function () {
+      dismissSplash(true);
+    });
+  });
 
   // ── Playlist: alterna vídeo quando termina ──
   video.addEventListener('ended', function () {

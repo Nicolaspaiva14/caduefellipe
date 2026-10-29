@@ -160,18 +160,23 @@ async function carregarShows() {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const horarioInicio =
-    document.getElementById('horario_inicio').value;
+  const horarioInicio = (document.getElementById('horario_inicio').value || '').trim();
+  const horarioFim = (document.getElementById('horario_fim').value || '').trim();
 
-  const horarioFim =
-    document.getElementById('horario_fim').value;
+  let horarioFinal = '';
+  if (horarioInicio && horarioFim) {
+    horarioFinal = `${horarioInicio} às ${horarioFim}`;
+  } else if (horarioInicio) {
+    horarioFinal = horarioInicio;
+  } else if (horarioFim) {
+    horarioFinal = horarioFim;
+  }
 
   const novoShow = {
     data_show: document.getElementById('data').value,
-    cidade: document.getElementById('cidade').value,
-    local: document.getElementById('local').value,
-
-    horario: `${horarioInicio} às ${horarioFim}`
+    cidade: (document.getElementById('cidade').value || '').trim(),
+    local: (document.getElementById('local').value || '').trim(),
+    horario: horarioFinal
   };
 
 

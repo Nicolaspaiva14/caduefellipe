@@ -21,10 +21,20 @@ function renderizarShows(lista) {
   emptyEl.classList.add('hidden');
 
   lista.forEach((ev, i) => {
-    const dataObj = new Date(ev.data_show + 'T00:00:00');
+    // Parsing seguro da data para evitar deslocamento de fuso horário
+    const partes = String(ev.data_show).trim().split('-');
+    const ano = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1;
+    const diaNum = parseInt(partes[2], 10);
+    const dataObj = new Date(ano, mes, diaNum);
 
     const dia = dataObj.toLocaleDateString('pt-BR', { day: '2-digit' });
     const resto = dataObj.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
+
+    const localLimpo = (ev.local || '').trim();
+    const cidadeLimpa = (ev.cidade || '').trim();
+    const termoBusca = [localLimpo, cidadeLimpa].filter(Boolean).join(', ');
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(termoBusca)}`;
 
     const li = document.createElement('li');
     li.className = 'agenda-item';
@@ -37,9 +47,28 @@ function renderizarShows(lista) {
       </div>
       <div class="agenda-divider"></div>
       <div class="agenda-info">
-        <p class="agenda-cidade">${ev.cidade}</p>
-        <p class="agenda-local">${ev.local}</p>
-        <p class="agenda-hora">${ev.horario || ''}</p>
+        <p class="agenda-cidade">${cidadeLimpa}</p>
+        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="agenda-local-link" title="Ver ${localLimpo} no Google Maps">
+          <svg class="agenda-pin-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5 2.5 2.5 2.5 2.5z"/>
+          </svg>
+          <span class="agenda-local-nome">${localLimpo}</span>
+        </a>
+        <p class="agenda-hora">
+          <svg class="agenda-clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>${ev.horario || ''}</span>
+        </p>
+      </div>
+      <div class="agenda-action">
+        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-maps" title="Abrir localização de ${localLimpo} no Google Maps" aria-label="Ver localização no Google Maps">
+          <svg class="btn-maps-pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5-2.5 2.5 2.5 2.5 2.5z"/>
+          </svg>
+          <span>Ver no Maps</span>
+        </a>
       </div>
     `;
 

@@ -8,6 +8,11 @@
 
   if (!video) return;
 
+  // Limpa qualquer flag de splash salva em sessões anteriores
+  try {
+    sessionStorage.removeItem('splash_dismissed');
+  } catch (e) {}
+
   // Reforça atributos para reprodução automática sem som (compatível com mobile/iOS)
   video.muted        = true;
   video.defaultMuted = true;
@@ -22,21 +27,19 @@
     if (p && p.catch) p.catch(function () {});
   }
 
-  function dismissSplash(imediato) {
-    try {
-      sessionStorage.setItem('splash_dismissed', '1');
-    } catch (e) {}
+  // Tenta reprodução inicial em segundo plano
+  playVideo();
 
+  function dismissSplash() {
+    // 1. Garante reprodução com o gesto do usuário (desbloqueia áudio/vídeo no mobile/iOS)
     playVideo();
 
     if (!splash) return;
 
-    if (imediato) {
-      splash.remove();
-      return;
-    }
-
+    // 2. Anima saída do splash
     splash.classList.add('hidden');
+
+    // 3. Remove do DOM após a transição
     splash.addEventListener('transitionend', function () {
       if (splash && splash.parentNode) {
         splash.remove();
@@ -44,38 +47,25 @@
     }, { once: true });
   }
 
-  // Se clicou na logo, veio de navegação com parâmetro ou já entrou antes: vai direto para os vídeos
-  var params = new URLSearchParams(window.location.search);
-  var pularSplash = params.has('direct') ||
-                    params.has('skipSplash') ||
-                    window.location.hash === '#inicio' ||
-                    (function () {
-                      try { return sessionStorage.getItem('splash_dismissed') === '1'; } catch (e) { return false; }
-                    })() ||
-                    (document.referrer && document.referrer.includes(window.location.host));
-
-  if (pularSplash && splash) {
-    dismissSplash(true);
-  } else {
-    playVideo();
-  }
-
-  // Clique no botão ENTRAR
+  // Clique no botão ENTRAR da tela de boas-vindas
   if (btnEnter) {
-    btnEnter.addEventListener('click', function () {
-      dismissSplash(false);
-    });
+    btnEnter.addEventListener('click', dismissSplash);
     btnEnter.addEventListener('touchend', function (e) {
       e.preventDefault();
-      dismissSplash(false);
+      dismissSplash();
     }, { passive: false });
   }
 
-  // Clique na logo na própria página inicial remove imediatamente o splash se existir
-  var linksInicio = document.querySelectorAll('.logo-link, a[href*="index.html"]');
+  // Ao clicar na logo ou em "Início", se o splash já tiver sido fechado,
+  // recarrega a index.html para voltar à primeira tela ("Bem-vindo ao mundo de Cadu & Fellipe")
+  var linksInicio = document.querySelectorAll('.logo-link, a[href="index.html"]');
   linksInicio.forEach(function (link) {
-    link.addEventListener('click', function () {
-      dismissSplash(true);
+    link.addEventListener('click', function (e) {
+      if (!document.getElementById('splash')) {
+        e.preventDefault();
+        window.location.href = 'index.html';
+        window.location.reload();
+      }
     });
   });
 
